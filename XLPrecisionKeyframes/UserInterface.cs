@@ -50,19 +50,48 @@ namespace XLPrecisionKeyframes
 
         private void CreatePositionControls()
         {
+            GUILayout.BeginVertical();
 
+            GUILayout.Label("Position");
+
+            CreateFloatField("X", "1");
+            CreateFloatField("Y", "2");
+            CreateFloatField("Z", "3");
+
+            GUILayout.EndVertical();
         }
 
         private void CreateRotationControls()
         {
+            GUILayout.BeginVertical();
 
+            GUILayout.Label("Rotation");
+
+            CreateFloatField("X", "1");
+            CreateFloatField("Y", "2");
+            CreateFloatField("Z", "3");
+            CreateFloatField("W", "4");
+
+            GUILayout.EndVertical();
         }
 
         private void CreateTimeControls()
         {
-
+            CreateFloatField("Time", "Who knows?", false);
         }
 
+        private void CreateFloatField(string label, string value, bool isIndented = true)
+        {
+            GUILayout.BeginHorizontal();
+
+            if (isIndented)
+                GUILayout.Space(20);
+
+            GUILayout.Label(label);
+            GUILayout.TextField(value);
+
+            GUILayout.EndHorizontal();
+        }
         
 
         public void UpdateTextFields(Transform cameraTransform)
@@ -74,3 +103,4 @@ namespace XLPrecisionKeyframes
         }
     }
 }
+

@@ -51,27 +51,39 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>References\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>References\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>References\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityModManager">
       <HintPath>References\UnityModManager.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keyframes\KeyframeInfo.cs" />
+    <Compile Include="Keyframes\PositionInfo.cs" />
+    <Compile Include="Keyframes\RotationInfo.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Patches\ReplayStatePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)"=="Debug" ( 
-del /Q /F "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\"
-copy /Y "$(TargetDir)XLPrecisionKeyframes.dll" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.dll"
-copy /Y "$(TargetDir)XLPrecisionKeyframes.pdb" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.pdb"
-copy /Y "$(TargetDir)Info.json" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\Info.json"
+del /Q /F "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.dll" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.dll"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.pdb" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.pdb"
+copy /Y "$(TargetDir)Info.json" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\Info.json"
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>

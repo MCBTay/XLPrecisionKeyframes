@@ -59,6 +59,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keyframes\KeyframeInfo.cs" />
+    <Compile Include="Keyframes\PositionInfo.cs" />
+    <Compile Include="Keyframes\RotationInfo.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\ReplayStatePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

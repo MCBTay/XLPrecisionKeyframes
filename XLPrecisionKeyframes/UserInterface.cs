@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
 using ReplayEditor;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
@@ -57,6 +58,7 @@ namespace XLPrecisionKeyframes
             GUILayout.BeginVertical();
 
             CreateKeyframeControls();
+            CreateCopyPasteControls();
             CreatePositionControls();
             CreateRotationControls();
             CreateTimeControls();
@@ -107,6 +109,36 @@ namespace XLPrecisionKeyframes
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
+        }
+
+        private void CreateCopyPasteControls()
+        {
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Copy"))
+            {
+                var json = JsonConvert.SerializeObject(displayed, Formatting.Indented);
+                json = $"```json\n{json}\n```";
+                GUIUtility.systemCopyBuffer = json;
+            }
+
+            if (GUILayout.Button("Copy All"))
+            {
+                var frames = new List<KeyframeInfo>();
+
+                foreach (var frame in keyFrames)
+                {
+                    var frameInfo = new KeyframeInfo(frame);
+
+                    frames.Add(frameInfo);
+                }
+
+                var json = JsonConvert.SerializeObject(frames, Formatting.Indented);
+                json = $"```json\n{json}\n```";
+                GUIUtility.systemCopyBuffer = json;
+            }
+
+            GUILayout.EndHorizontal();
         }
 
         /// <summary>

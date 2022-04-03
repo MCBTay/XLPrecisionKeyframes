@@ -22,6 +22,13 @@ namespace XLPrecisionKeyframes.Keyframes
             z = position.z.ToString("F8");
         }
 
+        public PositionInfo(PositionInfo positionInfo)
+        {
+            x = positionInfo.x;
+            y = positionInfo.y;
+            z = positionInfo.z;
+        }
+
         public override string ToString()
         {
             return $"({x:F8}, {y:F8}, {z:F8})";

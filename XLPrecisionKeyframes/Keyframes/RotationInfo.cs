@@ -24,6 +24,14 @@ namespace XLPrecisionKeyframes.Keyframes
             w = rotation.w.ToString("F8");
         }
 
+        public RotationInfo(RotationInfo rotationInfo)
+        {
+            x = rotationInfo.x;
+            y = rotationInfo.y;
+            z = rotationInfo.z;
+            w = rotationInfo.w;
+        }
+
         public override string ToString()
         {
             return $"({x:F8}, {y:F8}, {z:F8}, {w:F8})";

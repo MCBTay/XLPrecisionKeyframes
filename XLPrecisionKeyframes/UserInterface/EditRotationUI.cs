@@ -11,8 +11,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public void SetRotation(RotationInfo rotation)
         {
-            this.rotation = rotation;
-            this.originalRotation = rotation;
+            this.rotation = new RotationInfo(rotation);
+            this.originalRotation = new RotationInfo(rotation);
         }
 
         private void OnGUI()

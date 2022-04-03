@@ -12,8 +12,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public void SetPosition(PositionInfo position)
         {
-            this.position = position;
-            this.originalPosition = position;
+            this.position = new PositionInfo(position);
+            this.originalPosition = new PositionInfo(position);
         }
 
         private void OnGUI()
@@ -60,9 +60,7 @@ namespace XLPrecisionKeyframes.UserInterface
         private void UpdateCameraPosition()
         {
             var newPosition = position.ConvertToVector3();
-            UnityModManager.Logger.Log("XLPK: Updating cam position to " + newPosition + " from " + ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position);
             ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = newPosition;
-            UnityModManager.Logger.Log("XLPK: New cam position: " + ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position);
         }
 
         private void CreatePositionControls()

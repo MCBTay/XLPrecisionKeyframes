@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using ReplayEditor;
+using UnityEngine;
+using UnityModManagerNet;
 using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
@@ -6,6 +8,13 @@ namespace XLPrecisionKeyframes.UserInterface
     public class EditPositionUI : EditBaseUI
     {
         public PositionInfo position;
+        public PositionInfo originalPosition;
+
+        public void SetPosition(PositionInfo position)
+        {
+            this.position = position;
+            this.originalPosition = position;
+        }
 
         private void OnGUI()
         {
@@ -18,7 +27,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(823, new Rect(40, 40, 200, 50), DrawWindow, "Edit Position", style);
+            GUILayout.Window(824, new Rect(250, 80, 200, 50), DrawWindow, "Edit Position", style);
         }
 
         private void DrawWindow(int windowID)
@@ -34,17 +43,26 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Save"))
             {
-
+                UpdateCameraPosition();
+                gameObject.SetActive(false);
             }
 
             if (GUILayout.Button("Cancel"))
             {
-
+                gameObject.SetActive(false);
             }
 
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
+        }
+
+        private void UpdateCameraPosition()
+        {
+            var newPosition = position.ConvertToVector3();
+            UnityModManager.Logger.Log("XLPK: Updating cam position to " + newPosition + " from " + ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position);
+            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = newPosition;
+            UnityModManager.Logger.Log("XLPK: New cam position: " + ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position);
         }
 
         private void CreatePositionControls()

@@ -1,11 +1,19 @@
-﻿using UnityEngine;
+﻿using ReplayEditor;
+using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditRotationUI : EditBaseUI
     {
+        public RotationInfo originalRotation;
         public RotationInfo rotation;
+
+        public void SetRotation(RotationInfo rotation)
+        {
+            this.rotation = rotation;
+            this.originalRotation = rotation;
+        }
 
         private void OnGUI()
         {
@@ -18,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(823, new Rect(40, 40, 200, 50), DrawWindow, "Edit Rotation", style);
+            GUILayout.Window(825, new Rect(250, 175, 200, 50), DrawWindow, "Edit Rotation", style);
         }
 
         private void DrawWindow(int windowID)
@@ -34,17 +42,23 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Save"))
             {
-
+                UpdateCameraRotation();
+                gameObject.SetActive(false);
             }
 
             if (GUILayout.Button("Cancel"))
             {
-
+                gameObject.SetActive(false);
             }
 
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
+        }
+
+        private void UpdateCameraRotation()
+        {
+            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.rotation = rotation.ConvertToQuaternion();
         }
 
         private void CreateRotationControls()

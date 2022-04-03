@@ -21,6 +21,8 @@ namespace XLPrecisionKeyframes
         /// </summary>
         private static List<KeyFrame> keyFrames = new List<KeyFrame>();
 
+        private static string currentKeyframeName = "";
+
         private void OnEnable()
         {
             Cursor.visible = true;
@@ -68,11 +70,16 @@ namespace XLPrecisionKeyframes
             if (!keyFrames.Any()) return;
 
             GUILayout.BeginVertical();
-            GUILayout.Label("Keyframe Name", new GUIStyle(GUI.skin.textField)
+
+            if (!string.IsNullOrEmpty(currentKeyframeName))
             {
-                alignment = TextAnchor.MiddleCenter,
-                fontStyle = FontStyle.Bold
-            });
+                GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold
+                });
+            }
+            
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("<<"))
@@ -88,7 +95,7 @@ namespace XLPrecisionKeyframes
 
             if (GUILayout.Button(">"))
             {
-                ReplayEditorController.Instance.JumpByTime(-ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
+                ReplayEditorController.Instance.JumpByTime(ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
             }
 
             if (GUILayout.Button(">>"))
@@ -159,19 +166,12 @@ namespace XLPrecisionKeyframes
             GUILayout.EndHorizontal();
         }
 
-        private float ParseStringToFloat(string value)
-        {
-            if (!float.TryParse(value, out float parsedFloat))
-            {
-                return 0;
-            }
-
-            return parsedFloat;
-        }
-
-        public void UpdateKeyFrameControls(List<KeyFrame> frames)
+        public void UpdateKeyFrameControls(List<KeyFrame> frames, float? time)
         {
             keyFrames = frames;
+
+            var match = keyFrames.FirstOrDefault(x => Mathf.Approximately(x.time, time ?? 0));
+            currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : string.Empty;
         }
         
         public void UpdateTextFields(Transform cameraTransform, float? time)

@@ -24,14 +24,32 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private static string currentKeyframeName = "";
 
+        private GameObject EditPositionGameObject;
+        private EditPositionUI EditPositionUI;
+        private GameObject EditRotationGameObject;
+        private EditRotationUI EditRotationUI;
+
         private void OnEnable()
         {
+            EditPositionGameObject = new GameObject();
+            EditPositionGameObject.SetActive(false);
+            EditPositionUI = EditPositionGameObject.AddComponent<EditPositionUI>();
+            DontDestroyOnLoad(EditPositionGameObject);
+
+            EditRotationGameObject = new GameObject();
+            EditRotationGameObject.SetActive(false);
+            EditRotationUI = EditRotationGameObject.AddComponent<EditRotationUI>();
+            DontDestroyOnLoad(EditRotationGameObject);
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
 
         private void OnDisable()
         {
+            DestroyImmediate(EditPositionGameObject);
+            DestroyImmediate(EditRotationGameObject);
+
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -149,7 +167,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-
+                EditPositionGameObject.SetActive(true);
+                EditPositionUI.SetPosition(displayed.position);
             }
 
             GUILayout.EndHorizontal();
@@ -173,7 +192,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-
+                EditRotationGameObject.SetActive(true);
+                EditRotationUI.SetRotation(displayed.rotation);
             }
 
             GUILayout.EndHorizontal();
@@ -222,8 +242,8 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             if (cameraTransform == null) return;
 
-            displayed.position = new PositionInfo(cameraTransform.position);
-            displayed.rotation = new RotationInfo(cameraTransform.rotation);
+            displayed.position.Update(cameraTransform.position);
+            displayed.rotation.Update(cameraTransform.rotation);
             displayed.time = time ?? 0;
         }
     }

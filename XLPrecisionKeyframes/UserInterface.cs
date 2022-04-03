@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityModManagerNet;
+using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes
 {
@@ -7,6 +7,8 @@ namespace XLPrecisionKeyframes
     {
         private static UserInterface __instance;
         public static UserInterface Instance => __instance ?? (__instance = new UserInterface());
+
+        private static KeyframeInfo displayed = new KeyframeInfo();
 
         private void OnEnable()
         {
@@ -52,11 +54,11 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
-            GUILayout.Label("Position");
+            GUILayout.Label("<b>Position</b>");
 
-            CreateFloatField("X", "1");
-            CreateFloatField("Y", "2");
-            CreateFloatField("Z", "3");
+            CreateFloatField("X", displayed.position.x);
+            CreateFloatField("Y", displayed.position.y);
+            CreateFloatField("Z", displayed.position.z);
 
             GUILayout.EndVertical();
         }
@@ -65,21 +67,21 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
-            GUILayout.Label("Rotation");
+            GUILayout.Label("<b>Rotation</b>");
 
-            CreateFloatField("X", "1");
-            CreateFloatField("Y", "2");
-            CreateFloatField("Z", "3");
-            CreateFloatField("W", "4");
+            CreateFloatField("X", displayed.rotation.x);
+            CreateFloatField("Y", displayed.rotation.y);
+            CreateFloatField("Z", displayed.rotation.z);
+            CreateFloatField("W", displayed.rotation.w);
 
             GUILayout.EndVertical();
         }
 
         private void CreateTimeControls()
         {
-            CreateFloatField("Time", "Who knows?", false);
+            CreateFloatField("Time", displayed.time.ToString("F8"), false);
         }
-
+        
         private void CreateFloatField(string label, string value, bool isIndented = true)
         {
             GUILayout.BeginHorizontal();
@@ -87,19 +89,32 @@ namespace XLPrecisionKeyframes
             if (isIndented)
                 GUILayout.Space(20);
 
-            GUILayout.Label(label);
-            GUILayout.TextField(value);
+            GUILayout.Label($"<b>{label}:</b>");
+            GUILayout.TextField(value, new GUIStyle(GUI.skin.textField)
+            {
+                alignment = TextAnchor.MiddleRight
+            });
 
             GUILayout.EndHorizontal();
         }
-        
 
-        public void UpdateTextFields(Transform cameraTransform)
+        private float ParseStringToFloat(string value)
+        {
+            if (!float.TryParse(value, out float parsedFloat))
+            {
+                return 0;
+            }
+
+            return parsedFloat;
+        }
+        
+        public void UpdateTextFields(Transform cameraTransform, float? time)
         {
             if (cameraTransform == null) return;
 
-            //UnityModManager.Logger.Log("XLPK: Camera position: " + cameraTransform.position);
-            //UnityModManager.Logger.Log("XLPK: Camera rotation: " + cameraTransform.rotation);
+            displayed.position = new PositionInfo(cameraTransform.position);
+            displayed.rotation = new RotationInfo(cameraTransform.rotation);
+            displayed.time = time ?? 0;
         }
     }
 }

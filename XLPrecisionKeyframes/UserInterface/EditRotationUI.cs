@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(825, new Rect(250, 175, 200, 50), DrawWindow, "Edit Rotation", style);
+            GUILayout.Window(825, new Rect(245, 170, 200, 50), DrawWindow, "Edit Rotation", style);
         }
 
         private void DrawWindow(int windowID)

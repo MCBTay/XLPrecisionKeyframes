@@ -80,3 +80,24 @@ jobs:
     #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
     #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     #  run: .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+    - name: Prepare Files for Zip
+      run: |
+        New-Item -Path "XLPrecisionKeyframes\bin\Release\" -name "XLPrecisionKeyframes" -ItemType "directory"
+        Copy-Item "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes.dll" -Destination "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes/XLPrecisionKeyframes.dll"
+        Copy-Item "XLPrecisionKeyframes\bin\Release\Info.json" "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes\Info.json"
+
+    - name: Create ZIP
+      id: filename
+      shell: pwsh
+      run: |
+        $tag = "${{ github.event.release.tag_name }}".Replace('.', '-')
+        $archiveName = "XLPrecisionKeyframes-${tag}.zip"
+        Compress-Archive -Path XLPrecisionKeyframes/bin/Release/XLPrecisionKeyframes -DestinationPath ${archiveName} -CompressionLevel Optimal
+        echo "ARCHIVE_NAME=${archiveName}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Upload XLPrecisionKeyframes installable zip
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: XLMenuMod
+        path: ${{env.GITHUB_WORKSPACE}}XLPrecisionKeyframes/bin/Release/*.zip 

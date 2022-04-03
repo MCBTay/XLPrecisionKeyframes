@@ -19,5 +19,10 @@ namespace XLPrecisionKeyframes.Keyframes
             y = position.y.ToString();
             z = position.z.ToString();
         }
+
+        public override string ToString()
+        {
+            return $"({x}, {y}, {z})";
+        }
     }
 }

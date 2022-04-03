@@ -21,5 +21,10 @@ namespace XLPrecisionKeyframes.Keyframes
             z = rotation.z.ToString();
             w = rotation.w.ToString();
         }
+
+        public override string ToString()
+        {
+            return $"({x}, {y}, {z}, {w})";
+        }
     }
 }

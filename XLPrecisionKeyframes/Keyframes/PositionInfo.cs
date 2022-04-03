@@ -26,5 +26,12 @@ namespace XLPrecisionKeyframes.Keyframes
         {
             return $"({x:F8}, {y:F8}, {z:F8})";
         }
+
+        public void Update(Vector3 position)
+        {
+            x = position.x.ToString("F8");
+            y = position.y.ToString("F8");
+            z = position.z.ToString("F8");
+        }
     }
 }

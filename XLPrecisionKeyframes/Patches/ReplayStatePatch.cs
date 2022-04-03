@@ -13,7 +13,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                //TODO: create keyframe menu
+                UserInterface.Instance.Create();
             }
         }
 
@@ -25,7 +25,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                //TODO: destroy keyframe menu
+                UserInterface.Instance.Destroy();
             }
         }
     }

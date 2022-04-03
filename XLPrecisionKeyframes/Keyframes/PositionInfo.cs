@@ -36,9 +36,9 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public Vector3 ConvertToVector3()
         {
-            var xSuccess = float.TryParse(x, out float newX);
-            var ySuccess = float.TryParse(y, out float newY);
-            var zSuccess = float.TryParse(z, out float newZ);
+            var xSuccess = float.TryParse(x, out var newX);
+            var ySuccess = float.TryParse(y, out var newY);
+            var zSuccess = float.TryParse(z, out var newZ);
 
             return new Vector3(xSuccess ? newX : 0, ySuccess ? newY : 0, zSuccess ? newZ : 0);
         }

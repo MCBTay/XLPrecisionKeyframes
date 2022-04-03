@@ -38,10 +38,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                var camera = ReplayEditorController.Instance.cameraController.ReplayCamera;
-                if (camera == null) return;
-
-                UserInterface.Instance.Update(camera.transform);
+                UserInterface.Instance.Update(ReplayEditorController.Instance?.cameraController?.ReplayCamera?.transform);
             }
         }
     }

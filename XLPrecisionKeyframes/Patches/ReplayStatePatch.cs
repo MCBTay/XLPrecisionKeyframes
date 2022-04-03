@@ -1,5 +1,6 @@
 ﻿using GameManagement;
 using HarmonyLib;
+using ReplayEditor;
 
 namespace XLPrecisionKeyframes.Patches
 {
@@ -26,6 +27,21 @@ namespace XLPrecisionKeyframes.Patches
             static void Postfix()
             {
                 UserInterface.Instance.Destroy();
+            }
+        }
+
+        [HarmonyPatch(typeof(ReplayState), nameof(ReplayState.OnUpdate))]
+        public static class OnUpdatePatch
+        {
+            /// <summary>
+            /// Patching into OnUpdate to be able to track the camera position.
+            /// </summary>
+            static void Postfix()
+            {
+                var camera = ReplayEditorController.Instance.cameraController.ReplayCamera;
+                if (camera == null) return;
+
+                UserInterface.Instance.Update(camera.transform);
             }
         }
     }

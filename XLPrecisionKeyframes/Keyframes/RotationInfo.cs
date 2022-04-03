@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace XLPrecisionKeyframes.Keyframes
 {
+    [Serializable]
     public class RotationInfo
     {
         public string x;

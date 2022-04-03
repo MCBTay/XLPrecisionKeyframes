@@ -15,14 +15,14 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public PositionInfo(Vector3 position)
         {
-            x = position.x.ToString();
-            y = position.y.ToString();
-            z = position.z.ToString();
+            x = position.x.ToString("F8");
+            y = position.y.ToString("F8");
+            z = position.z.ToString("F8");
         }
 
         public override string ToString()
         {
-            return $"({x}, {y}, {z})";
+            return $"({x:F8}, {y:F8}, {z:F8})";
         }
     }
 }

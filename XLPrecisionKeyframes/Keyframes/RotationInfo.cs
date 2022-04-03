@@ -16,15 +16,15 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public RotationInfo(Quaternion rotation)
         {
-            x = rotation.x.ToString();
-            y = rotation.y.ToString();
-            z = rotation.z.ToString();
-            w = rotation.w.ToString();
+            x = rotation.x.ToString("F8");
+            y = rotation.y.ToString("F8");
+            z = rotation.z.ToString("F8");
+            w = rotation.w.ToString("F8");
         }
 
         public override string ToString()
         {
-            return $"({x}, {y}, {z}, {w})";
+            return $"({x:F8}, {y:F8}, {z:F8}, {w:F8})";
         }
     }
 }

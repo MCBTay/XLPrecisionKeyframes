@@ -14,7 +14,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                UserInterface.Instance.Create();
+                Main.UserInterfaceGameObject.SetActive(true);
             }
         }
 
@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                UserInterface.Instance.Destroy();
+                Main.UserInterfaceGameObject.SetActive(false);
             }
         }
 
@@ -38,7 +38,7 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                UserInterface.Instance.Update(ReplayEditorController.Instance?.cameraController?.ReplayCamera?.transform);
+                UserInterface.Instance.UpdateTextFields(ReplayEditorController.Instance?.cameraController?.ReplayCamera?.transform);
             }
         }
     }

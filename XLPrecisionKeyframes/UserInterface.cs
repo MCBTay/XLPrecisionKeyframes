@@ -1,4 +1,7 @@
-﻿namespace XLPrecisionKeyframes
+﻿using UnityEngine;
+using UnityModManagerNet;
+
+namespace XLPrecisionKeyframes
 {
     public class UserInterface
     {
@@ -13,6 +16,12 @@
         public void Destroy()
         {
 
+        }
+
+        public void Update(Transform cameraTransform)
+        {
+            UnityModManager.Logger.Log("XLPK: Camera position: " + cameraTransform.position);
+            UnityModManager.Logger.Log("XLPK: Camera rotation: " + cameraTransform.rotation);
         }
     }
 }

@@ -38,7 +38,10 @@ namespace XLPrecisionKeyframes.Patches
             /// </summary>
             static void Postfix()
             {
-                UserInterface.Instance.UpdateTextFields(ReplayEditorController.Instance?.cameraController?.ReplayCamera?.transform);
+                var camTransform = ReplayEditorController.Instance?.cameraController?.ReplayCamera?.transform;
+                var time = ReplayEditorController.Instance?.playbackController?.CurrentTime;
+
+                UserInterface.Instance.UpdateTextFields(camTransform, time);
             }
         }
     }

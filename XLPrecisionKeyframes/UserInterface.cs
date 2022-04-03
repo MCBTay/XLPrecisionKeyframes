@@ -117,28 +117,24 @@ namespace XLPrecisionKeyframes
 
             if (GUILayout.Button("Copy"))
             {
-                var json = JsonConvert.SerializeObject(displayed, Formatting.Indented);
-                json = $"```json\n{json}\n```";
-                GUIUtility.systemCopyBuffer = json;
+                AddToClipboard(displayed);
             }
 
             if (GUILayout.Button("Copy All"))
             {
-                var frames = new List<KeyframeInfo>();
+                var frames = keyFrames.Select(frame => new KeyframeInfo(frame)).ToList();
 
-                foreach (var frame in keyFrames)
-                {
-                    var frameInfo = new KeyframeInfo(frame);
-
-                    frames.Add(frameInfo);
-                }
-
-                var json = JsonConvert.SerializeObject(frames, Formatting.Indented);
-                json = $"```json\n{json}\n```";
-                GUIUtility.systemCopyBuffer = json;
+                AddToClipboard(frames);
             }
 
             GUILayout.EndHorizontal();
+        }
+
+        private void AddToClipboard(object o)
+        {
+            var json = JsonConvert.SerializeObject(o, Formatting.Indented);
+            json = $"```json\n{json}\n```";
+            GUIUtility.systemCopyBuffer = json;
         }
 
         /// <summary>

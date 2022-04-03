@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using ReplayEditor;
+using UnityEngine;
 
 namespace XLPrecisionKeyframes.Keyframes
 {
+    [Serializable]
     public class KeyframeInfo
     {
         public PositionInfo position;
@@ -25,6 +28,11 @@ namespace XLPrecisionKeyframes.Keyframes
         public KeyframeInfo(Transform transform) : this(transform.position, transform.rotation)
         {
             
+        }
+
+        public KeyframeInfo(KeyFrame keyframe) : this(keyframe.position, keyframe.rotation)
+        {
+            time = keyframe.time;
         }
     }
 }

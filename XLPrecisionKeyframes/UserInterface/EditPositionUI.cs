@@ -1,6 +1,5 @@
 ﻿using ReplayEditor;
 using UnityEngine;
-using UnityModManagerNet;
 using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
@@ -59,8 +58,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void UpdateCameraPosition()
         {
-            var newPosition = position.ConvertToVector3();
-            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = newPosition;
+            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = position.ConvertToVector3();
         }
 
         private void CreatePositionControls()

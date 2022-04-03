@@ -57,4 +57,12 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)"=="Debug" ( 
+del /Q /F "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.dll" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.dll"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.pdb" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.pdb"
+copy /Y "$(TargetDir)Info.json" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\Info.json"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

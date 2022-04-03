@@ -36,5 +36,15 @@ namespace XLPrecisionKeyframes.Keyframes
             z = rotation.z.ToString("F8");
             w = rotation.w.ToString("F8");
         }
+
+        public Quaternion ConvertToQuaternion()
+        {
+            var xSuccess = float.TryParse(x, out float newX);
+            var ySuccess = float.TryParse(y, out float newY);
+            var zSuccess = float.TryParse(z, out float newZ);
+            var wSuccess = float.TryParse(w, out float newW);
+
+            return new Quaternion(xSuccess ? newX : 0, ySuccess ? newY : 0, zSuccess ? newZ : 0, wSuccess ? newW : 0);
+        }
     }
 }

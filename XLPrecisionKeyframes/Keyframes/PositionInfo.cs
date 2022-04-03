@@ -33,5 +33,14 @@ namespace XLPrecisionKeyframes.Keyframes
             y = position.y.ToString("F8");
             z = position.z.ToString("F8");
         }
+
+        public Vector3 ConvertToVector3()
+        {
+            var xSuccess = float.TryParse(x, out float newX);
+            var ySuccess = float.TryParse(y, out float newY);
+            var zSuccess = float.TryParse(z, out float newZ);
+
+            return new Vector3(xSuccess ? newX : 0, ySuccess ? newY : 0, zSuccess ? newZ : 0);
+        }
     }
 }

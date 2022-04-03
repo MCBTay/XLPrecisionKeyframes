@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes
+namespace XLPrecisionKeyframes.UserInterface
 {
     public class UserInterface : MonoBehaviour
     {
@@ -144,7 +144,15 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
+            GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Position</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+
+            }
+
+            GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.position.x);
             CreateFloatField("Y", displayed.position.y);
@@ -160,7 +168,15 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
+            GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Rotation</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+
+            }
+
+            GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.rotation.x);
             CreateFloatField("Y", displayed.rotation.y);
@@ -186,7 +202,7 @@ namespace XLPrecisionKeyframes
                 GUILayout.Space(20);
 
             GUILayout.Label($"<b>{label}:</b>");
-            GUILayout.TextField(value, new GUIStyle(GUI.skin.textField)
+            GUILayout.Label(value, new GUIStyle(GUI.skin.label)
             {
                 alignment = TextAnchor.MiddleRight
             });

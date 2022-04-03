@@ -22,7 +22,7 @@ namespace XLPrecisionKeyframes
 
             UserInterfaceGameObject = new GameObject();
             UserInterfaceGameObject.SetActive(false);
-            UserInterfaceGameObject.AddComponent<UserInterface>();
+            UserInterfaceGameObject.AddComponent<UserInterface.UserInterface>();
             Object.DontDestroyOnLoad(UserInterfaceGameObject);
 
             modEntry.OnToggle = OnToggle;

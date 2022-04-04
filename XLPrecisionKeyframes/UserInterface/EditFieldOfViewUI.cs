@@ -1,5 +1,6 @@
 ﻿using ReplayEditor;
 using UnityEngine;
+using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
 {
@@ -10,11 +11,11 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private string fovString;
 
-        public void SetFov(float fov)
+        public override void SetValue(FieldOfViewInfo fov)
         {
-            this.fov = fov;
-            this.fovString = fov.ToString("F5");
-            this.originalFov = fov;
+            this.fov = fov.fov;
+            this.fovString = fov.fov.ToString("F5");
+            this.originalFov = fov.fov;
         }
 
         protected override void OnGUI()

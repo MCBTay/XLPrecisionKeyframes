@@ -1,5 +1,6 @@
 ﻿using ReplayEditor;
 using UnityEngine;
+using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
 {
@@ -10,11 +11,11 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private string timeString;
 
-        public void SetTime(float time)
+        public override void SetValue(TimeInfo time)
         {
-            this.time = time;
-            this.timeString = time.ToString("F8");
-            this.originalTime = time;
+            this.time = time.time;
+            this.timeString = time.time.ToString("F8");
+            this.originalTime = time.time;
         }
 
         protected override void OnGUI()

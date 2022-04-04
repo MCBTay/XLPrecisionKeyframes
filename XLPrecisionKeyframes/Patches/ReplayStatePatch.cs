@@ -42,8 +42,8 @@ namespace XLPrecisionKeyframes.Patches
                 var camTransform = cameraController?.ReplayCamera?.transform;
                 var time = ReplayEditorController.Instance?.playbackController?.CurrentTime;
 
-                UserInterface.Instance.UpdateTextFields(camTransform, time);
-                UserInterface.Instance.UpdateKeyFrameControls(cameraController?.keyFrames, time);
+                UserInterface.UserInterface.Instance.UpdateTextFields(camTransform, time);
+                UserInterface.UserInterface.Instance.UpdateKeyFrameControls(cameraController?.keyFrames, time);
             }
         }
     }

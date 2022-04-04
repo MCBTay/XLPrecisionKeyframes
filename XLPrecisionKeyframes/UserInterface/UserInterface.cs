@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes
+namespace XLPrecisionKeyframes.UserInterface
 {
     public class UserInterface : MonoBehaviour
     {
@@ -24,14 +24,32 @@ namespace XLPrecisionKeyframes
 
         private static string currentKeyframeName = "";
 
+        private GameObject EditPositionGameObject;
+        private EditPositionUI EditPositionUI;
+        private GameObject EditRotationGameObject;
+        private EditRotationUI EditRotationUI;
+
         private void OnEnable()
         {
+            EditPositionGameObject = new GameObject();
+            EditPositionGameObject.SetActive(false);
+            EditPositionUI = EditPositionGameObject.AddComponent<EditPositionUI>();
+            DontDestroyOnLoad(EditPositionGameObject);
+
+            EditRotationGameObject = new GameObject();
+            EditRotationGameObject.SetActive(false);
+            EditRotationUI = EditRotationGameObject.AddComponent<EditRotationUI>();
+            DontDestroyOnLoad(EditRotationGameObject);
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
 
         private void OnDisable()
         {
+            DestroyImmediate(EditPositionGameObject);
+            DestroyImmediate(EditRotationGameObject);
+
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -117,28 +135,24 @@ namespace XLPrecisionKeyframes
 
             if (GUILayout.Button("Copy"))
             {
-                var json = JsonConvert.SerializeObject(displayed, Formatting.Indented);
-                json = $"```json\n{json}\n```";
-                GUIUtility.systemCopyBuffer = json;
+                AddToClipboard(displayed);
             }
 
             if (GUILayout.Button("Copy All"))
             {
-                var frames = new List<KeyframeInfo>();
+                var frames = keyFrames.Select(frame => new KeyframeInfo(frame)).ToList();
 
-                foreach (var frame in keyFrames)
-                {
-                    var frameInfo = new KeyframeInfo(frame);
-
-                    frames.Add(frameInfo);
-                }
-
-                var json = JsonConvert.SerializeObject(frames, Formatting.Indented);
-                json = $"```json\n{json}\n```";
-                GUIUtility.systemCopyBuffer = json;
+                AddToClipboard(frames);
             }
 
             GUILayout.EndHorizontal();
+        }
+
+        private void AddToClipboard(object o)
+        {
+            var json = JsonConvert.SerializeObject(o, Formatting.Indented);
+            json = $"```json\n{json}\n```";
+            GUIUtility.systemCopyBuffer = json;
         }
 
         /// <summary>
@@ -148,7 +162,16 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
+            GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Position</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+                EditPositionGameObject.SetActive(true);
+                EditPositionUI.SetPosition(displayed.position);
+            }
+
+            GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.position.x);
             CreateFloatField("Y", displayed.position.y);
@@ -164,7 +187,16 @@ namespace XLPrecisionKeyframes
         {
             GUILayout.BeginVertical();
 
+            GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Rotation</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+                EditRotationGameObject.SetActive(true);
+                EditRotationUI.SetRotation(displayed.rotation);
+            }
+
+            GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.rotation.x);
             CreateFloatField("Y", displayed.rotation.y);
@@ -190,7 +222,7 @@ namespace XLPrecisionKeyframes
                 GUILayout.Space(20);
 
             GUILayout.Label($"<b>{label}:</b>");
-            GUILayout.TextField(value, new GUIStyle(GUI.skin.textField)
+            GUILayout.Label(value, new GUIStyle(GUI.skin.label)
             {
                 alignment = TextAnchor.MiddleRight
             });
@@ -210,8 +242,8 @@ namespace XLPrecisionKeyframes
         {
             if (cameraTransform == null) return;
 
-            displayed.position = new PositionInfo(cameraTransform.position);
-            displayed.rotation = new RotationInfo(cameraTransform.rotation);
+            displayed.position.Update(cameraTransform.position);
+            displayed.rotation.Update(cameraTransform.rotation);
             displayed.time = time ?? 0;
         }
     }

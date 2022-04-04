@@ -9,7 +9,7 @@ namespace XLPrecisionKeyframes.UserInterface
         public RotationInfo originalRotation;
         public RotationInfo rotation;
 
-        public void SetRotation(RotationInfo rotation)
+        public override void SetValue(RotationInfo rotation)
         {
             this.rotation = new RotationInfo(rotation);
             this.originalRotation = new RotationInfo(rotation);

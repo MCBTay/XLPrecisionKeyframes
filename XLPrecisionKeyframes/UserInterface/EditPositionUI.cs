@@ -9,7 +9,7 @@ namespace XLPrecisionKeyframes.UserInterface
         public PositionInfo position;
         public PositionInfo originalPosition;
 
-        public void SetPosition(PositionInfo position)
+        public override void SetValue(PositionInfo position)
         {
             this.position = new PositionInfo(position);
             this.originalPosition = new PositionInfo(position);

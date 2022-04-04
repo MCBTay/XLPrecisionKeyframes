@@ -20,14 +20,18 @@ namespace XLPrecisionKeyframes.UserInterface
         /// <summary>
         /// A list of keyframes that are currently in editor.  Currently used for the keyframe controls, knowing whether to hide them or how to cycle through them.
         /// </summary>
-        private static List<KeyFrame> keyFrames = new List<KeyFrame>();
+        public static List<KeyFrame> keyFrames = new List<KeyFrame>();
 
-        private static string currentKeyframeName = "";
+        public static string currentKeyframeName = "";
 
         private GameObject EditPositionGameObject;
         private EditPositionUI EditPositionUI;
+
         private GameObject EditRotationGameObject;
         private EditRotationUI EditRotationUI;
+
+        private GameObject EditTimeGameObject;
+        private EditTimeUI EditTimeUI;
 
         private void OnEnable()
         {
@@ -41,6 +45,11 @@ namespace XLPrecisionKeyframes.UserInterface
             EditRotationUI = EditRotationGameObject.AddComponent<EditRotationUI>();
             DontDestroyOnLoad(EditRotationGameObject);
 
+            EditTimeGameObject = new GameObject();
+            EditTimeGameObject.SetActive(false);
+            EditTimeUI = EditTimeGameObject.AddComponent<EditTimeUI>();
+            DontDestroyOnLoad(EditTimeGameObject);
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -49,6 +58,7 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             DestroyImmediate(EditPositionGameObject);
             DestroyImmediate(EditRotationGameObject);
+            DestroyImmediate(EditTimeGameObject);
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -65,7 +75,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(823, new Rect(40, 40, 200, 50), DrawWindow, "XL Precision Keyframes", style);
+            GUILayout.Window(823, new Rect(40, 40, 250, 50), DrawWindow, "XL Precision Keyframes", style);
         }
 
         private void DrawWindow(int windowID)
@@ -211,7 +221,28 @@ namespace XLPrecisionKeyframes.UserInterface
         /// </summary>
         private void CreateTimeControls()
         {
-            CreateFloatField("Time", displayed.time.ToString("F8"), false);
+            GUILayout.BeginVertical();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("<b>Time</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+                EditTimeGameObject.SetActive(true);
+                EditTimeUI.SetTime(displayed.time.time);
+            }
+            GUILayout.EndHorizontal();
+
+            CreateFloatField("Time", displayed.time.time.ToString("F8"));
+            CreateFloatField("From End", displayed.time.timeFromEnd.ToString("F8"));
+
+            if (keyFrames != null && keyFrames.Any())
+            {
+                CreateFloatField("To Prev Keyframe", displayed.time.timeFromPrevKeyframe.ToString("F8"));
+                CreateFloatField("To Next Keyframe", displayed.time.timeFromNextKeyframe.ToString("F8"));
+            }
+
+            GUILayout.EndVertical();
         }
         
         private void CreateFloatField(string label, string value, bool isIndented = true)
@@ -244,7 +275,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             displayed.position.Update(cameraTransform.position);
             displayed.rotation.Update(cameraTransform.rotation);
-            displayed.time = time ?? 0;
+            displayed.time.Update(time ?? 0);
         }
     }
 }

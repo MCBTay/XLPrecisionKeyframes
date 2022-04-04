@@ -18,7 +18,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         protected override void OnGUI()
         {
-            StartingYPos = 300;
+            StartingYPos = 350;
             WindowLabel = "Edit FOV";
 
             base.OnGUI();

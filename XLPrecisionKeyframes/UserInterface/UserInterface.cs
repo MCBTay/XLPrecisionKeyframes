@@ -272,7 +272,7 @@ namespace XLPrecisionKeyframes.UserInterface
             }
             GUILayout.EndHorizontal();
 
-            CreateFloatField("FOV", displayed.fov.fov.ToString("F8"));
+            CreateFloatField("FOV", displayed.fov.fov.ToString("F5"));
 
             GUILayout.EndVertical();
         }

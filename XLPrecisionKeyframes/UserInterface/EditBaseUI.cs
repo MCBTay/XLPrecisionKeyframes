@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
 {
@@ -71,7 +72,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         protected virtual void CreateControls()
         {
-
+            // to be overriden
         }
 
         protected virtual void CreateSaveAndCancelButtons()
@@ -104,6 +105,26 @@ namespace XLPrecisionKeyframes.UserInterface
         private void CloseWindow()
         {
             gameObject.SetActive(false);
+        }
+
+        public virtual void SetValue(PositionInfo position)
+        {
+            // to be overriden
+        }
+
+        public virtual void SetValue(RotationInfo rotation)
+        {
+            // to be overriden
+        }
+
+        public virtual void SetValue(TimeInfo time)
+        {
+            // to be overriden
+        }
+
+        public virtual void SetValue(FieldOfViewInfo fov)
+        {
+            // to be overriden
         }
     }
 }

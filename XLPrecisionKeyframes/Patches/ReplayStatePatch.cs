@@ -39,7 +39,7 @@ namespace XLPrecisionKeyframes.Patches
             static void Postfix()
             {
                 var cameraController = ReplayEditorController.Instance?.cameraController;
-                var camTransform = cameraController?.ReplayCamera?.transform;
+                var camTransform = cameraController?.VirtualCamera?.transform;
                 var time = ReplayEditorController.Instance?.playbackController?.CurrentTime;
 
                 UserInterface.UserInterface.Instance.UpdateTextFields(camTransform, time);

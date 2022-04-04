@@ -7,9 +7,26 @@ namespace XLPrecisionKeyframes.Keyframes
     [Serializable]
     public class KeyframeInfo
     {
-        public PositionInfo position;
-        public RotationInfo rotation;
-        public TimeInfo time;
+        private PositionInfo _position;
+        public PositionInfo position
+        {
+            get => _position;
+            set => _position = value;
+        }
+
+        private RotationInfo _rotation;
+        public RotationInfo rotation
+        {
+            get => _rotation;
+            set => _rotation = value;
+        }
+
+        private TimeInfo _time;
+        public TimeInfo time
+        {
+            get => _time;
+            set => _time = value;
+        }
 
         public KeyframeInfo()
         {

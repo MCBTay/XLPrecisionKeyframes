@@ -23,23 +23,13 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void DrawWindow(int windowID)
-        {
-            base.DrawWindow(windowID);
-
-            GUILayout.BeginVertical();
-            CreatePositionControls();
-            CreateSaveAndCancelButtons();
-            GUILayout.EndVertical();
-        }
-
         protected override void Save()
         {
             ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = position.ConvertToVector3();
             base.Save();
         }
 
-        private void CreatePositionControls()
+        protected override void CreateControls()
         {
             GUILayout.BeginVertical();
 

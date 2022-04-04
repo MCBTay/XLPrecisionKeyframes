@@ -25,16 +25,6 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void DrawWindow(int windowID)
-        {
-            base.DrawWindow(windowID);
-
-            GUILayout.BeginVertical();
-            CreateTimeControls();
-            CreateSaveAndCancelButtons();
-            GUILayout.EndVertical();
-        }
-
         protected override void Save()
         {
             if (!float.TryParse(timeString, out var newTime)) return;
@@ -44,7 +34,7 @@ namespace XLPrecisionKeyframes.UserInterface
             base.Save();
         }
 
-        private void CreateTimeControls()
+        protected override void CreateControls()
         {
             GUILayout.BeginVertical();
 

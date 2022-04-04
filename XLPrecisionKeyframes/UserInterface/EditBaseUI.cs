@@ -62,6 +62,16 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             GUI.DragWindow(new Rect(0.0f, 0.0f, 10000f, 20f));
             GUI.backgroundColor = Color.black;
+
+            GUILayout.BeginVertical();
+            CreateControls();
+            CreateSaveAndCancelButtons();
+            GUILayout.EndVertical();
+        }
+
+        protected virtual void CreateControls()
+        {
+
         }
 
         protected virtual void CreateSaveAndCancelButtons()

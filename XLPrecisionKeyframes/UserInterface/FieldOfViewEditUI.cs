@@ -24,16 +24,6 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void DrawWindow(int windowID)
-        {
-            base.DrawWindow(windowID);
-
-            GUILayout.BeginVertical();
-            CreateFovControls();
-            CreateSaveAndCancelButtons();
-            GUILayout.EndVertical();
-        }
-
         protected override void Save()
         {
             if (!float.TryParse(fovString, out var newFov)) return;
@@ -43,7 +33,7 @@ namespace XLPrecisionKeyframes.UserInterface
             base.Save();
         }
 
-        private void CreateFovControls()
+        protected override void CreateControls()
         {
             GUILayout.BeginVertical();
 

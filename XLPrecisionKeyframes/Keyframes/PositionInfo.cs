@@ -6,26 +6,9 @@ namespace XLPrecisionKeyframes.Keyframes
     [Serializable]
     public class PositionInfo
     {
-        private string _x;
-        public string x
-        {
-            get => _x;
-            set => _x = value;
-        }
-
-        private string _y;
-        public string y
-        {
-            get => _y;
-            set => _y = value;
-        }
-
-        private string _z;
-        public string z
-        {
-            get => _z;
-            set => _z = value;
-        }
+        public string x { get; set; }
+        public string y { get; set; }
+        public string z { get; set; }
 
         public PositionInfo() : this(Vector3.zero)
         {

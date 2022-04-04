@@ -29,10 +29,12 @@ namespace XLPrecisionKeyframes.Keyframes
 
             timeFromEnd = clipEndTime - time;
 
-            var prevKeyFrame = ReplayEditorController.Instance.cameraController.FindNextKeyFrame(time, true);
+            var camController = ReplayEditorController.Instance.cameraController;
+
+            var prevKeyFrame = camController.FindNextKeyFrame(time, true);
             timeFromPrevKeyframe = time - (prevKeyFrame?.time ?? 0);
 
-            var nextKeyFrame = ReplayEditorController.Instance.cameraController.FindNextKeyFrame(time, false);
+            var nextKeyFrame = camController.FindNextKeyFrame(time, false);
             timeFromNextKeyframe = (nextKeyFrame?.time ?? clipEndTime) - time;
         }
     }

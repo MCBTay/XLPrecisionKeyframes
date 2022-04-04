@@ -15,50 +15,28 @@ namespace XLPrecisionKeyframes.UserInterface
             this.originalPosition = new PositionInfo(position);
         }
 
-        private void OnGUI()
+        protected override void OnGUI()
         {
-            GUI.backgroundColor = Color.black;
+            StartingYPos = 85;
+            WindowLabel = "Edit Position";
 
-            var style = new GUIStyle(GUI.skin.window)
-            {
-                contentOffset = new Vector2(0, -20),
-                stretchHeight = false,
-                stretchWidth = false
-            };
-
-            GUILayout.Window(824, new Rect(295, GetYPos(85), 200, 50), DrawWindow, "Edit Position", style);
+            base.OnGUI();
         }
 
-        private void DrawWindow(int windowID)
+        protected override void DrawWindow(int windowID)
         {
-            GUI.DragWindow(new Rect(0.0f, 0.0f, 10000f, 20f));
-            GUI.backgroundColor = Color.black;
+            base.DrawWindow(windowID);
 
             GUILayout.BeginVertical();
-
             CreatePositionControls();
-
-            GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Save"))
-            {
-                UpdateCameraPosition();
-                gameObject.SetActive(false);
-            }
-
-            if (GUILayout.Button("Cancel"))
-            {
-                gameObject.SetActive(false);
-            }
-
-            GUILayout.EndHorizontal();
-
+            CreateSaveAndCancelButtons();
             GUILayout.EndVertical();
         }
 
-        private void UpdateCameraPosition()
+        protected override void Save()
         {
             ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = position.ConvertToVector3();
+            base.Save();
         }
 
         private void CreatePositionControls()

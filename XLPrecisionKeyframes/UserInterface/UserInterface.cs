@@ -301,13 +301,14 @@ namespace XLPrecisionKeyframes.UserInterface
             currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : string.Empty;
         }
         
-        public void UpdateTextFields(Transform cameraTransform, float? time)
+        public void UpdateTextFields(Transform cameraTransform, float? time, float? fov)
         {
             if (cameraTransform == null) return;
 
             displayed.position.Update(cameraTransform.position);
             displayed.rotation.Update(cameraTransform.rotation);
             displayed.time.Update(time ?? 0);
+            displayed.fov.Update(fov ?? 0);
         }
     }
 }

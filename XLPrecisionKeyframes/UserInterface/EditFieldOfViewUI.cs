@@ -2,7 +2,7 @@
 
 namespace XLPrecisionKeyframes.UserInterface
 {
-    public class FieldOfViewEditUI : EditBaseUI
+    public class EditFieldOfViewUI : EditBaseUI
     {
         public float fov;
         public float originalFov;

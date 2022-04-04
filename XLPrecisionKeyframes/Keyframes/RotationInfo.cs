@@ -6,10 +6,33 @@ namespace XLPrecisionKeyframes.Keyframes
     [Serializable]
     public class RotationInfo
     {
-        public string x;
-        public string y;
-        public string z;
-        public string w;
+        private string _x;
+        public string x
+        {
+            get => _x;
+            set => _x = value;
+        }
+
+        private string _y;
+        public string y
+        {
+            get => _y;
+            set => _y = value;
+        }
+
+        private string _z;
+        public string z
+        {
+            get => _z;
+            set => _z = value;
+        }
+
+        private string _w;
+        public string w
+        {
+            get => _w;
+            set => _w = value;
+        }
 
         public RotationInfo() : this(Quaternion.identity)
         {

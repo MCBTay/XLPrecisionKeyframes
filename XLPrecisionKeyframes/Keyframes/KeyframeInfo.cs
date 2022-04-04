@@ -1,5 +1,5 @@
-﻿using System;
-using ReplayEditor;
+﻿using ReplayEditor;
+using System;
 using UnityEngine;
 
 namespace XLPrecisionKeyframes.Keyframes
@@ -9,20 +9,20 @@ namespace XLPrecisionKeyframes.Keyframes
     {
         public PositionInfo position;
         public RotationInfo rotation;
-        public float time;
+        public TimeInfo time;
 
         public KeyframeInfo()
         {
             position = new PositionInfo();
             rotation = new RotationInfo();
-            time = 0;
+            time = new TimeInfo();
         }
 
         public KeyframeInfo(Vector3 pos, Quaternion rot)
         {
             position = new PositionInfo(pos);
             rotation = new RotationInfo(rot);
-            time = 0;
+            time = new TimeInfo();
         }
 
         public KeyframeInfo(Transform transform) : this(transform.position, transform.rotation)
@@ -32,7 +32,7 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public KeyframeInfo(KeyFrame keyframe) : this(keyframe.position, keyframe.rotation)
         {
-            time = keyframe.time;
+            time = new TimeInfo(keyframe.time);
         }
     }
 }

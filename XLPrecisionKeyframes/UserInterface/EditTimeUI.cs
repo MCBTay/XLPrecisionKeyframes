@@ -1,18 +1,20 @@
 ﻿using ReplayEditor;
 using UnityEngine;
-using XLPrecisionKeyframes.Keyframes;
 
 namespace XLPrecisionKeyframes.UserInterface
 {
-    public class EditPositionUI : EditBaseUI
+    public class EditTimeUI : EditBaseUI
     {
-        public PositionInfo position;
-        public PositionInfo originalPosition;
+        public float time;
+        public float originalTime;
 
-        public void SetPosition(PositionInfo position)
+        private string timeString;
+
+        public void SetTime(float time)
         {
-            this.position = new PositionInfo(position);
-            this.originalPosition = new PositionInfo(position);
+            this.time = time;
+            this.timeString = time.ToString("F8");
+            this.originalTime = time;
         }
 
         private void OnGUI()
@@ -26,7 +28,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(824, new Rect(295, GetYPos(85), 200, 50), DrawWindow, "Edit Position", style);
+            GUILayout.Window(824, new Rect(295, GetYPos(280), 200, 50), DrawWindow, "Edit Time", style);
         }
 
         private void DrawWindow(int windowID)
@@ -36,13 +38,13 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.BeginVertical();
 
-            CreatePositionControls();
+            CreateTimeControls();
 
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Save"))
             {
-                UpdateCameraPosition();
+                UpdateTimelinePosition();
                 gameObject.SetActive(false);
             }
 
@@ -56,18 +58,18 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.EndVertical();
         }
 
-        private void UpdateCameraPosition()
+        private void UpdateTimelinePosition()
         {
-            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = position.ConvertToVector3();
+            if (!float.TryParse(timeString, out var newTime)) return;
+
+            ReplayEditorController.Instance.SetPlaybackTime(newTime);
         }
 
-        private void CreatePositionControls()
+        private void CreateTimeControls()
         {
             GUILayout.BeginVertical();
 
-            position.x = CreateFloatField("X", position.x);
-            position.y = CreateFloatField("Y", position.y);
-            position.z = CreateFloatField("Z", position.z);
+            timeString = CreateFloatField("Time", timeString);
 
             GUILayout.EndVertical();
         }

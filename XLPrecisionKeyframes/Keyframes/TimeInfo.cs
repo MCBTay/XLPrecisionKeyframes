@@ -6,33 +6,10 @@ namespace XLPrecisionKeyframes.Keyframes
     [Serializable]
     public class TimeInfo
     {
-        private float _time;
-        public float time
-        {
-            get => _time;
-            set => _time = value;
-        }
-
-        private float _timeFromEnd;
-        public float timeFromEnd
-        {
-            get => _timeFromEnd;
-            set => _timeFromEnd = value;
-        }
-
-        private float _timeFromPrevKeyframe;
-        public float timeFromPrevKeyframe
-        {
-            get => _timeFromPrevKeyframe;
-            set => _timeFromPrevKeyframe = value;
-        }
-
-        private float _timeFromNextKeyframe;
-        public float timeFromNextKeyframe
-        {
-            get => _timeFromNextKeyframe;
-            set => _timeFromNextKeyframe = value;
-        }
+        public float time { get; set; }
+        public float timeFromEnd { get; set; }
+        public float timeFromPrevKeyframe { get; set; }
+        public float timeFromNextKeyframe { get; set; }
 
         public TimeInfo() : this(0)
         {

@@ -17,7 +17,7 @@ namespace XLPrecisionKeyframes.UserInterface
             this.originalTime = time;
         }
 
-        private void OnGUI()
+        protected override void OnGUI()
         {
             StartingYPos = 280;
             WindowLabel = "Edit Time";

@@ -44,6 +44,11 @@ namespace XLPrecisionKeyframes.Patches
 
                 UserInterface.UserInterface.Instance.UpdateTextFields(camTransform, time);
                 UserInterface.UserInterface.Instance.UpdateKeyFrameControls(cameraController?.keyFrames, time);
+
+                if (PlayerController.Instance.inputController.player.GetButtonDown("Left Stick Button"))
+                {
+                    Main.UserInterfaceGameObject.SetActive(!Main.UserInterfaceGameObject.activeSelf);
+                }
             }
         }
     }

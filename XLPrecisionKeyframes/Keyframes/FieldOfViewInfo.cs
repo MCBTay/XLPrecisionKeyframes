@@ -5,7 +5,7 @@ namespace XLPrecisionKeyframes.Keyframes
     [Serializable]
     public class FieldOfViewInfo
     {
-        public string fov { get; set; }
+        public float fov { get; set; }
 
         public FieldOfViewInfo() : this(0)
         {
@@ -14,12 +14,12 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public FieldOfViewInfo(float fov)
         {
-            this.fov = fov.ToString("F8");
+            this.fov = fov;
         }
 
         public void Update(float fov)
         {
-            this.fov = fov.ToString("F8");
+            this.fov = fov;
         }
     }
 }

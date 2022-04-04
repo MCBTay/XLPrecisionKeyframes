@@ -18,7 +18,7 @@ namespace XLPrecisionKeyframes.Keyframes
 
         public TimeInfo(float time)
         {
-            this.time = time;
+            Update(time);
         }
 
         public void Update(float newTime)

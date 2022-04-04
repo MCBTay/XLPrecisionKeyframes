@@ -33,6 +33,9 @@ namespace XLPrecisionKeyframes.UserInterface
         private GameObject EditTimeGameObject;
         private EditTimeUI EditTimeUI;
 
+        private GameObject EditFovGameObject;
+        private EditFieldOfViewUI EditFovUI;
+
         private void OnEnable()
         {
             EditPositionGameObject = new GameObject();
@@ -50,6 +53,11 @@ namespace XLPrecisionKeyframes.UserInterface
             EditTimeUI = EditTimeGameObject.AddComponent<EditTimeUI>();
             DontDestroyOnLoad(EditTimeGameObject);
 
+            EditFovGameObject = new GameObject();
+            EditFovGameObject.SetActive(false);
+            EditFovUI = EditFovGameObject.AddComponent<EditFieldOfViewUI>();
+            DontDestroyOnLoad(EditFovGameObject);
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -59,6 +67,7 @@ namespace XLPrecisionKeyframes.UserInterface
             DestroyImmediate(EditPositionGameObject);
             DestroyImmediate(EditRotationGameObject);
             DestroyImmediate(EditTimeGameObject);
+            DestroyImmediate(EditFovGameObject);
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -90,6 +99,7 @@ namespace XLPrecisionKeyframes.UserInterface
             CreatePositionControls();
             CreateRotationControls();
             CreateTimeControls();
+            CreateFieldOfViewControls();
 
             GUILayout.EndVertical();
         }
@@ -244,7 +254,29 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.EndVertical();
         }
-        
+
+        /// <summary>
+        /// Creates the field of view edit section, which contains a FOV label and FOV field showing the current field of view.
+        /// </summary>
+        private void CreateFieldOfViewControls()
+        {
+            GUILayout.BeginVertical();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("<b>Field of View</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+                EditFovGameObject.SetActive(true);
+                EditFovUI.SetFov(displayed.fov.fov);
+            }
+            GUILayout.EndHorizontal();
+
+            CreateFloatField("FOV", displayed.fov.fov.ToString("F8"));
+
+            GUILayout.EndVertical();
+        }
+
         private void CreateFloatField(string label, string value, bool isIndented = true)
         {
             GUILayout.BeginHorizontal();

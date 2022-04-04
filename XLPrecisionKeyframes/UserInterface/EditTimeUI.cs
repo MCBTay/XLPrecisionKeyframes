@@ -28,7 +28,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(824, new Rect(245, 80, 200, 50), DrawWindow, "Edit Time", style);
+            GUILayout.Window(824, new Rect(295, GetYPos(280), 200, 50), DrawWindow, "Edit Time", style);
         }
 
         private void DrawWindow(int windowID)
@@ -60,7 +60,9 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void UpdateTimelinePosition()
         {
-            ReplayEditorController.Instance.SetPlaybackTime(time);
+            if (!float.TryParse(timeString, out var newTime)) return;
+
+            ReplayEditorController.Instance.SetPlaybackTime(newTime);
         }
 
         private void CreateTimeControls()

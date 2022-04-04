@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(824, new Rect(295, 80, 200, 50), DrawWindow, "Edit Position", style);
+            GUILayout.Window(824, new Rect(295, GetYPos(85), 200, 50), DrawWindow, "Edit Position", style);
         }
 
         private void DrawWindow(int windowID)

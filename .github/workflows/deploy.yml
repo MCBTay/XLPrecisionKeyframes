@@ -29,7 +29,7 @@ jobs:
     - name: Update Info.json
       uses: jossef/action-set-json-field@v1
       with:
-        file: ./XLRandomMap/Info.json
+        file: ./XLPrecisionKeyframes/Info.json
         field: Version
         value: ${{ github.event.release.tag_name }}
         
@@ -59,7 +59,7 @@ jobs:
     - name: Prepare Files for Zip
       run: |
         New-Item -Path "XLPrecisionKeyframes\bin\Release\" -name "XLPrecisionKeyframes" -ItemType "directory"
-        Copy-Item "XLPrecisionKeyframes\bin\Release\XLRandomMap.dll" -Destination "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes/XLPrecisionKeyframes.dll"
+        Copy-Item "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes.dll" -Destination "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes/XLPrecisionKeyframes.dll"
         Copy-Item "XLPrecisionKeyframes\bin\Release\Info.json" "XLPrecisionKeyframes\bin\Release\XLPrecisionKeyframes\Info.json"
         
     - name: Create ZIP
@@ -71,7 +71,7 @@ jobs:
         Compress-Archive -Path XLPrecisionKeyframes/bin/Release/XLPrecisionKeyframes -DestinationPath ${archiveName} -CompressionLevel Optimal
         echo "ARCHIVE_NAME=${archiveName}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
         
-    - name: Upload XLRandomMap.zip to release
+    - name: Upload XLPrecisionKeyframes.zip to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}

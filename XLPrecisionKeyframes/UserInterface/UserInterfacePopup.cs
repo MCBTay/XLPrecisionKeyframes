@@ -5,8 +5,8 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class UserInterfacePopup<T> where T : EditBaseUI
     {
-        private GameObject gameObject;
-        private T ui;
+        private readonly GameObject gameObject;
+        private readonly T ui;
 
         public UserInterfacePopup()
         {

@@ -6,8 +6,8 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditRotationUI : EditBaseUI
     {
-        public RotationInfo originalRotation;
-        public RotationInfo rotation;
+        public RotationInfo originalRotation { get; set; }
+        public RotationInfo rotation { get; set; }
 
         public override void SetValue(RotationInfo rotation)
         {

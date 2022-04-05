@@ -6,8 +6,8 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditPositionUI : EditBaseUI
     {
-        public PositionInfo position;
-        public PositionInfo originalPosition;
+        public PositionInfo position { get; set; }
+        public PositionInfo originalPosition { get; set; }
 
         public override void SetValue(PositionInfo position)
         {

@@ -6,8 +6,8 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditFieldOfViewUI : EditBaseUI
     {
-        public float fov;
-        public float originalFov;
+        public float fov { get; set; }
+        public float originalFov { get; set; }
 
         private string fovString;
 

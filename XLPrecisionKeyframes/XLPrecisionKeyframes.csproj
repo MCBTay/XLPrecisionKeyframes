@@ -86,6 +86,7 @@
     <Compile Include="UserInterface\EditTimeUI.cs" />
     <Compile Include="UserInterface\EditFieldOfViewUI.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
+    <Compile Include="UserInterface\UserInterfacePopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">

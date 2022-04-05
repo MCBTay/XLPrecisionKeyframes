@@ -24,39 +24,17 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public static string currentKeyframeName = "";
 
-        private GameObject EditPositionGameObject;
-        private EditPositionUI EditPositionUI;
-
-        private GameObject EditRotationGameObject;
-        private EditRotationUI EditRotationUI;
-
-        private GameObject EditTimeGameObject;
-        private EditTimeUI EditTimeUI;
-
-        private GameObject EditFovGameObject;
-        private EditFieldOfViewUI EditFovUI;
+        private UserInterfacePopup<EditPositionUI> EditPositionUI;
+        private UserInterfacePopup<EditRotationUI> EditRotationUI;
+        private UserInterfacePopup<EditTimeUI> EditTimeUI;
+        private UserInterfacePopup<EditFieldOfViewUI> EditFovUI;
 
         private void OnEnable()
         {
-            EditPositionGameObject = new GameObject();
-            EditPositionGameObject.SetActive(false);
-            EditPositionUI = EditPositionGameObject.AddComponent<EditPositionUI>();
-            DontDestroyOnLoad(EditPositionGameObject);
-
-            EditRotationGameObject = new GameObject();
-            EditRotationGameObject.SetActive(false);
-            EditRotationUI = EditRotationGameObject.AddComponent<EditRotationUI>();
-            DontDestroyOnLoad(EditRotationGameObject);
-
-            EditTimeGameObject = new GameObject();
-            EditTimeGameObject.SetActive(false);
-            EditTimeUI = EditTimeGameObject.AddComponent<EditTimeUI>();
-            DontDestroyOnLoad(EditTimeGameObject);
-
-            EditFovGameObject = new GameObject();
-            EditFovGameObject.SetActive(false);
-            EditFovUI = EditFovGameObject.AddComponent<EditFieldOfViewUI>();
-            DontDestroyOnLoad(EditFovGameObject);
+            EditPositionUI = new UserInterfacePopup<EditPositionUI>();
+            EditRotationUI = new UserInterfacePopup<EditRotationUI>();
+            EditTimeUI = new UserInterfacePopup<EditTimeUI>();
+            EditFovUI = new UserInterfacePopup<EditFieldOfViewUI>();
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -64,10 +42,10 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void OnDisable()
         {
-            DestroyImmediate(EditPositionGameObject);
-            DestroyImmediate(EditRotationGameObject);
-            DestroyImmediate(EditTimeGameObject);
-            DestroyImmediate(EditFovGameObject);
+            EditPositionUI.Destroy();
+            EditRotationUI.Destroy();
+            EditTimeUI.Destroy();
+            EditFovUI.Destroy();
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -187,10 +165,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditPositionGameObject.SetActive(true);
-                EditPositionUI.SetPosition(displayed.position);
+                EditPositionUI.Show(displayed.position);
             }
-
             GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.position.x);
@@ -212,8 +188,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditRotationGameObject.SetActive(true);
-                EditRotationUI.SetRotation(displayed.rotation);
+                EditRotationUI.Show(displayed.rotation);
             }
 
             GUILayout.EndHorizontal();
@@ -238,8 +213,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditTimeGameObject.SetActive(true);
-                EditTimeUI.SetTime(displayed.time.time);
+                EditTimeUI.Show(displayed.time);
             }
             GUILayout.EndHorizontal();
 
@@ -267,8 +241,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditFovGameObject.SetActive(true);
-                EditFovUI.SetFov(displayed.fov.fov);
+                EditFovUI.Show(displayed.fov);
             }
             GUILayout.EndHorizontal();
 
@@ -277,12 +250,11 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.EndVertical();
         }
 
-        private void CreateFloatField(string label, string value, bool isIndented = true)
+        private void CreateFloatField(string label, string value)
         {
             GUILayout.BeginHorizontal();
 
-            if (isIndented)
-                GUILayout.Space(20);
+            GUILayout.Space(20);
 
             GUILayout.Label($"<b>{label}:</b>");
             GUILayout.Label(value, new GUIStyle(GUI.skin.label)

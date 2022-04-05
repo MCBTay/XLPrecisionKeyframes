@@ -6,10 +6,10 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditRotationUI : EditBaseUI
     {
-        public RotationInfo originalRotation;
-        public RotationInfo rotation;
+        public RotationInfo originalRotation { get; set; }
+        public RotationInfo rotation { get; set; }
 
-        public void SetRotation(RotationInfo rotation)
+        public override void SetValue(RotationInfo rotation)
         {
             this.rotation = new RotationInfo(rotation);
             this.originalRotation = new RotationInfo(rotation);
@@ -23,23 +23,13 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void DrawWindow(int windowID)
-        {
-            base.DrawWindow(windowID);
-
-            GUILayout.BeginVertical();
-            CreateRotationControls();
-            CreateSaveAndCancelButtons();
-            GUILayout.EndVertical();
-        }
-
         protected override void Save()
         {
             ReplayEditorController.Instance.cameraController.VirtualCamera.transform.rotation = rotation.ConvertToQuaternion();
             base.Save();
         }
 
-        private void CreateRotationControls()
+        protected override void CreateControls()
         {
             GUILayout.BeginVertical();
 

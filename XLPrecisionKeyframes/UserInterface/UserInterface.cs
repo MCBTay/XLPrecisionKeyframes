@@ -24,31 +24,17 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public static string currentKeyframeName = "";
 
-        private GameObject EditPositionGameObject;
-        private EditPositionUI EditPositionUI;
-
-        private GameObject EditRotationGameObject;
-        private EditRotationUI EditRotationUI;
-
-        private GameObject EditTimeGameObject;
-        private EditTimeUI EditTimeUI;
+        private UserInterfacePopup<EditPositionUI> EditPositionUI;
+        private UserInterfacePopup<EditRotationUI> EditRotationUI;
+        private UserInterfacePopup<EditTimeUI> EditTimeUI;
+        private UserInterfacePopup<EditFieldOfViewUI> EditFovUI;
 
         private void OnEnable()
         {
-            EditPositionGameObject = new GameObject();
-            EditPositionGameObject.SetActive(false);
-            EditPositionUI = EditPositionGameObject.AddComponent<EditPositionUI>();
-            DontDestroyOnLoad(EditPositionGameObject);
-
-            EditRotationGameObject = new GameObject();
-            EditRotationGameObject.SetActive(false);
-            EditRotationUI = EditRotationGameObject.AddComponent<EditRotationUI>();
-            DontDestroyOnLoad(EditRotationGameObject);
-
-            EditTimeGameObject = new GameObject();
-            EditTimeGameObject.SetActive(false);
-            EditTimeUI = EditTimeGameObject.AddComponent<EditTimeUI>();
-            DontDestroyOnLoad(EditTimeGameObject);
+            EditPositionUI = new UserInterfacePopup<EditPositionUI>();
+            EditRotationUI = new UserInterfacePopup<EditRotationUI>();
+            EditTimeUI = new UserInterfacePopup<EditTimeUI>();
+            EditFovUI = new UserInterfacePopup<EditFieldOfViewUI>();
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -56,9 +42,10 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void OnDisable()
         {
-            DestroyImmediate(EditPositionGameObject);
-            DestroyImmediate(EditRotationGameObject);
-            DestroyImmediate(EditTimeGameObject);
+            EditPositionUI.Destroy();
+            EditRotationUI.Destroy();
+            EditTimeUI.Destroy();
+            EditFovUI.Destroy();
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -90,6 +77,7 @@ namespace XLPrecisionKeyframes.UserInterface
             CreatePositionControls();
             CreateRotationControls();
             CreateTimeControls();
+            CreateFieldOfViewControls();
 
             GUILayout.EndVertical();
         }
@@ -177,10 +165,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditPositionGameObject.SetActive(true);
-                EditPositionUI.SetPosition(displayed.position);
+                EditPositionUI.Show(displayed.position);
             }
-
             GUILayout.EndHorizontal();
 
             CreateFloatField("X", displayed.position.x);
@@ -202,8 +188,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditRotationGameObject.SetActive(true);
-                EditRotationUI.SetRotation(displayed.rotation);
+                EditRotationUI.Show(displayed.rotation);
             }
 
             GUILayout.EndHorizontal();
@@ -228,8 +213,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button("Edit"))
             {
-                EditTimeGameObject.SetActive(true);
-                EditTimeUI.SetTime(displayed.time.time);
+                EditTimeUI.Show(displayed.time);
             }
             GUILayout.EndHorizontal();
 
@@ -244,13 +228,33 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.EndVertical();
         }
-        
-        private void CreateFloatField(string label, string value, bool isIndented = true)
+
+        /// <summary>
+        /// Creates the field of view edit section, which contains a FOV label and FOV field showing the current field of view.
+        /// </summary>
+        private void CreateFieldOfViewControls()
+        {
+            GUILayout.BeginVertical();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("<b>Field of View</b>");
+
+            if (GUILayout.Button("Edit"))
+            {
+                EditFovUI.Show(displayed.fov);
+            }
+            GUILayout.EndHorizontal();
+
+            CreateFloatField("FOV", displayed.fov.fov.ToString("F5"));
+
+            GUILayout.EndVertical();
+        }
+
+        private void CreateFloatField(string label, string value)
         {
             GUILayout.BeginHorizontal();
 
-            if (isIndented)
-                GUILayout.Space(20);
+            GUILayout.Space(20);
 
             GUILayout.Label($"<b>{label}:</b>");
             GUILayout.Label(value, new GUIStyle(GUI.skin.label)
@@ -269,13 +273,14 @@ namespace XLPrecisionKeyframes.UserInterface
             currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : string.Empty;
         }
         
-        public void UpdateTextFields(Transform cameraTransform, float? time)
+        public void UpdateTextFields(Transform cameraTransform, float? time, float? fov)
         {
             if (cameraTransform == null) return;
 
             displayed.position.Update(cameraTransform.position);
             displayed.rotation.Update(cameraTransform.rotation);
             displayed.time.Update(time ?? 0);
+            displayed.fov.Update(fov ?? 0);
         }
     }
 }

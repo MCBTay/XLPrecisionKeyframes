@@ -6,10 +6,10 @@ namespace XLPrecisionKeyframes.UserInterface
 {
     public class EditPositionUI : EditBaseUI
     {
-        public PositionInfo position;
-        public PositionInfo originalPosition;
+        public PositionInfo position { get; set; }
+        public PositionInfo originalPosition { get; set; }
 
-        public void SetPosition(PositionInfo position)
+        public override void SetValue(PositionInfo position)
         {
             this.position = new PositionInfo(position);
             this.originalPosition = new PositionInfo(position);
@@ -23,23 +23,13 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void DrawWindow(int windowID)
-        {
-            base.DrawWindow(windowID);
-
-            GUILayout.BeginVertical();
-            CreatePositionControls();
-            CreateSaveAndCancelButtons();
-            GUILayout.EndVertical();
-        }
-
         protected override void Save()
         {
             ReplayEditorController.Instance.cameraController.VirtualCamera.transform.position = position.ConvertToVector3();
             base.Save();
         }
 
-        private void CreatePositionControls()
+        protected override void CreateControls()
         {
             GUILayout.BeginVertical();
 

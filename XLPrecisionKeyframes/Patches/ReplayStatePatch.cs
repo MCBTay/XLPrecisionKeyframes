@@ -39,10 +39,11 @@ namespace XLPrecisionKeyframes.Patches
             static void Postfix()
             {
                 var cameraController = ReplayEditorController.Instance?.cameraController;
-                var camTransform = cameraController?.ReplayCamera?.transform;
+                var replayCamera = cameraController?.ReplayCamera;
+                var camTransform = replayCamera?.transform;
                 var time = ReplayEditorController.Instance?.playbackController?.CurrentTime;
 
-                UserInterface.UserInterface.Instance.UpdateTextFields(camTransform, time);
+                UserInterface.UserInterface.Instance.UpdateTextFields(camTransform, time, replayCamera?.fieldOfView);
                 UserInterface.UserInterface.Instance.UpdateKeyFrameControls(cameraController?.keyFrames, time);
 
                 if (PlayerController.Instance.inputController.player.GetButtonDown("Left Stick Button"))

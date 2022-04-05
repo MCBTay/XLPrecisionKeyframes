@@ -30,7 +30,7 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             if (!float.TryParse(fovString, out var newFov)) return;
 
-            ReplayEditorController.Instance.cameraController.ReplayCamera.fieldOfView = newFov;
+            ReplayEditorController.Instance.cameraController.VirtualCamera.m_Lens.FieldOfView = newFov;
 
             base.Save();
         }

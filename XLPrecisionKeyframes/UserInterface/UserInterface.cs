@@ -62,7 +62,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(823, new Rect(40, 40, 250, 50), DrawWindow, "XL Precision Keyframes", style);
+            GUILayout.Window(823, new Rect(Settings.Instance.WindowXPos, Settings.Instance.WindowYPos, 250, 50), DrawWindow, "XL Precision Keyframes", style);
         }
 
         private void DrawWindow(int windowID)

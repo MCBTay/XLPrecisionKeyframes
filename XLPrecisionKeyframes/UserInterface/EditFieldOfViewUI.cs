@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void Save()
+        public override void Save()
         {
             if (!float.TryParse(fovString, out var newFov)) return;
 

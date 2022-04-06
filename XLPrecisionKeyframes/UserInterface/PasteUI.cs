@@ -41,6 +41,7 @@ namespace XLPrecisionKeyframes.UserInterface
             }
             catch (Exception ex)
             {
+                parseFailed = true;
                 UnityModManager.Logger.Log("XLPK: Exception caught deserializing JSON: " + pastedJson + ex);
                 return;
             }
@@ -53,6 +54,12 @@ namespace XLPrecisionKeyframes.UserInterface
             parseFailed = false;
 
             base.Save();
+        }
+
+        protected override void Cancel()
+        {
+            pastedJson = string.Empty;
+            base.Cancel();
         }
 
         protected override void CreateSaveButton()

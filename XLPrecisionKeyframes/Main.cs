@@ -26,6 +26,8 @@ namespace XLPrecisionKeyframes
             Object.DontDestroyOnLoad(UserInterfaceGameObject);
 
             modEntry.OnToggle = OnToggle;
+            modEntry.OnGUI = Settings.Instance.OnSettingsGUI;
+            modEntry.OnSaveGUI = Settings.Instance.Save;
 #if DEBUG
             modEntry.OnUnload = Unload;
 #endif

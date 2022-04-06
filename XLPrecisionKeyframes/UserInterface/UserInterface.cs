@@ -24,11 +24,11 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public static string currentKeyframeName = "";
 
-        private UserInterfacePopup<PasteUI> PasteUI;
-        public UserInterfacePopup<EditPositionUI> EditPositionUI;
-        public UserInterfacePopup<EditRotationUI> EditRotationUI;
-        private UserInterfacePopup<EditTimeUI> EditTimeUI;
-        public UserInterfacePopup<EditFieldOfViewUI> EditFovUI;
+        public UserInterfacePopup<PasteUI> PasteUI { get; set; }
+        public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }
+        public UserInterfacePopup<EditRotationUI> EditRotationUI { get; set; }
+        public UserInterfacePopup<EditTimeUI> EditTimeUI { get; set; }
+        public UserInterfacePopup<EditFieldOfViewUI> EditFovUI { get; set; }
 
         private void OnEnable()
         {

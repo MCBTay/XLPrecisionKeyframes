@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void Save()
+        public override void Save()
         {
             if (!float.TryParse(timeString, out var newTime)) return;
 

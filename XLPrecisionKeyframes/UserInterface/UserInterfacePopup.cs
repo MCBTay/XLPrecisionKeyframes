@@ -21,7 +21,35 @@ namespace XLPrecisionKeyframes.UserInterface
             Object.DestroyImmediate(gameObject);
         }
 
-        private void Show()
+        public void Save()
+        {
+            ui.Save();
+        }
+
+        #region SetValue
+        public void SetValue(PositionInfo position)
+        {
+            ui.SetValue(position);
+        }
+
+        public void SetValue(RotationInfo rotation)
+        {
+            ui.SetValue(rotation);
+        }
+
+        public void SetValue(TimeInfo time)
+        {
+            ui.SetValue(time);
+        }
+
+        public void SetValue(FieldOfViewInfo fov)
+        {
+            ui.SetValue(fov);
+        }
+        #endregion
+
+        #region Show()
+        public void Show()
         {
             gameObject.SetActive(true);
         }
@@ -29,25 +57,26 @@ namespace XLPrecisionKeyframes.UserInterface
         public void Show(PositionInfo position)
         {
             Show();
-            ui.SetValue(position);
+            SetValue(position);
         }
 
         public void Show(RotationInfo rotation)
         {
             Show();
-            ui.SetValue(rotation);
+            SetValue(rotation);
         }
 
         public void Show(TimeInfo time)
         {
             Show();
-            ui.SetValue(time);
+            SetValue(time);
         }
 
         public void Show(FieldOfViewInfo fov)
         {
             Show();
-            ui.SetValue(fov);
+            SetValue(fov);
         }
+        #endregion
     }
 }

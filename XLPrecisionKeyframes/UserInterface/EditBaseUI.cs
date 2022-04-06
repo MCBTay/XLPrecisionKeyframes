@@ -81,18 +81,23 @@ namespace XLPrecisionKeyframes.UserInterface
         protected virtual void CreateSaveAndCancelButtons()
         {
             GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Save"))
-            {
-                Save();
-            }
-
-            if (GUILayout.Button("Cancel"))
-            {
-                Cancel();
-            }
-
+            CreateSaveButton();
+            CreateCancelButton();
             GUILayout.EndHorizontal();
+        }
+
+        protected virtual void CreateSaveButton()
+        {
+            if (!GUILayout.Button("Save")) return;
+
+            Save();
+        }
+
+        protected virtual void CreateCancelButton()
+        {
+            if (!GUILayout.Button("Cancel")) return;
+                
+            Cancel();
         }
 
         public virtual void Save()

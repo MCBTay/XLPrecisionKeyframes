@@ -10,11 +10,14 @@ namespace XLPrecisionKeyframes.UserInterface
         private bool HasKeyframeName => !string.IsNullOrEmpty(UserInterface.currentKeyframeName);
 
         protected float StartingYPos;
+        protected bool IgnoreYPosChanges;
         protected string WindowLabel;
 
         protected float GetYPos(float originalYPos)
         {
             var yPos = originalYPos;
+
+            if (IgnoreYPosChanges) return yPos;
 
             switch (HasKeyframes)
             {
@@ -92,7 +95,7 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.EndHorizontal();
         }
 
-        protected virtual void Save()
+        public virtual void Save()
         {
             CloseWindow();
         }

@@ -67,8 +67,8 @@ namespace XLPrecisionKeyframes.UserInterface
             if (string.IsNullOrEmpty(pastedJson)) return;
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
-            buttonStyle.normal.textColor = parseFailed ? Color.red : Color.white;
-
+            buttonStyle.normal.textColor = buttonStyle.hover.textColor = parseFailed ? Color.red : Color.white;
+            
             if (!GUILayout.Button("Save", buttonStyle)) return;
 
             Save();

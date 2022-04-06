@@ -24,13 +24,15 @@ namespace XLPrecisionKeyframes.UserInterface
 
         public static string currentKeyframeName = "";
 
-        private UserInterfacePopup<EditPositionUI> EditPositionUI;
-        private UserInterfacePopup<EditRotationUI> EditRotationUI;
-        private UserInterfacePopup<EditTimeUI> EditTimeUI;
-        private UserInterfacePopup<EditFieldOfViewUI> EditFovUI;
+        public UserInterfacePopup<PasteUI> PasteUI { get; set; }
+        public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }
+        public UserInterfacePopup<EditRotationUI> EditRotationUI { get; set; }
+        public UserInterfacePopup<EditTimeUI> EditTimeUI { get; set; }
+        public UserInterfacePopup<EditFieldOfViewUI> EditFovUI { get; set; }
 
         private void OnEnable()
         {
+            PasteUI = new UserInterfacePopup<PasteUI>();
             EditPositionUI = new UserInterfacePopup<EditPositionUI>();
             EditRotationUI = new UserInterfacePopup<EditRotationUI>();
             EditTimeUI = new UserInterfacePopup<EditTimeUI>();
@@ -42,6 +44,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void OnDisable()
         {
+            PasteUI.Destroy();
             EditPositionUI.Destroy();
             EditRotationUI.Destroy();
             EditTimeUI.Destroy();
@@ -62,7 +65,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(823, new Rect(40, 40, 250, 50), DrawWindow, "XL Precision Keyframes", style);
+            GUILayout.Window(823, new Rect(Settings.Instance.WindowXPos, Settings.Instance.WindowYPos, 250, 50), DrawWindow, "XL Precision Keyframes", style);
         }
 
         private void DrawWindow(int windowID)
@@ -129,6 +132,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void CreateCopyPasteControls()
         {
+            GUILayout.BeginVertical();
+
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Copy"))
@@ -143,7 +148,14 @@ namespace XLPrecisionKeyframes.UserInterface
                 AddToClipboard(frames);
             }
 
+            if (GUILayout.Button("Paste JSON"))
+            {
+                PasteUI.Show();
+            }
+
             GUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
         }
 
         private void AddToClipboard(object o)

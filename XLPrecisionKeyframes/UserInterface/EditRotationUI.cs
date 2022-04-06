@@ -23,7 +23,7 @@ namespace XLPrecisionKeyframes.UserInterface
             base.OnGUI();
         }
 
-        protected override void Save()
+        public override void Save()
         {
             ReplayEditorController.Instance.cameraController.VirtualCamera.transform.rotation = rotation.ConvertToQuaternion();
             base.Save();

@@ -91,6 +91,7 @@
     <Compile Include="UserInterface\EditRotationUI.cs" />
     <Compile Include="UserInterface\EditTimeUI.cs" />
     <Compile Include="UserInterface\EditFieldOfViewUI.cs" />
+    <Compile Include="UserInterface\PasteUI.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
     <Compile Include="UserInterface\UserInterfacePopup.cs" />
   </ItemGroup>

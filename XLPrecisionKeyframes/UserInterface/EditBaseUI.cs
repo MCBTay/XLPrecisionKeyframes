@@ -107,7 +107,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void CloseWindow()
         {
-            gameObject.SetActive(false);
+            gameObject?.SetActive(false);
         }
 
         public virtual void SetValue(PositionInfo position)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityModManagerNet;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes.UserInterface
+namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class PasteUI : EditBaseUI
     {

@@ -2,12 +2,12 @@
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes.UserInterface
+namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditTimeUI : EditBaseUI
     {
-        public float time;
-        public float originalTime;
+        public float time { get; set; }
+        public float originalTime { get; set; }
 
         private string timeString;
 

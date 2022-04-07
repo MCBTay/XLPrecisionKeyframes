@@ -2,7 +2,7 @@
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes.UserInterface
+namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditBaseUI : MonoBehaviour
     {
@@ -59,7 +59,8 @@ namespace XLPrecisionKeyframes.UserInterface
                 stretchWidth = false
             };
 
-            GUILayout.Window(824, new Rect(295, GetYPos(StartingYPos), 200, 50), DrawWindow, WindowLabel, style);
+            var xPos = Settings.Instance.WindowXPos + 255;
+            GUILayout.Window(824, new Rect(xPos, GetYPos(StartingYPos), 200, 50), DrawWindow, WindowLabel, style);
         }
 
         protected virtual void DrawWindow(int windowID)

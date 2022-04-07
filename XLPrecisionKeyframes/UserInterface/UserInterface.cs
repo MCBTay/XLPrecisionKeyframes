@@ -93,18 +93,21 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.BeginVertical();
 
-            if (!string.IsNullOrEmpty(currentKeyframeName))
-            {
-                GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
-                {
-                    alignment = TextAnchor.MiddleCenter,
-                    fontStyle = FontStyle.Bold
-                });
-            }
-            
+            CreateKeyframeNameControl();
             CreateKeyframeArrowControls();
 
             GUILayout.EndVertical();
+        }
+
+        private void CreateKeyframeNameControl()
+        {
+            if (string.IsNullOrEmpty(currentKeyframeName)) return;
+
+            GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold
+            });
         }
 
         private void CreateKeyframeArrowControls()

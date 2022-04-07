@@ -102,8 +102,14 @@ namespace XLPrecisionKeyframes.UserInterface
                 });
             }
             
-            GUILayout.BeginHorizontal();
+            CreateKeyframeArrowControls();
 
+            GUILayout.EndVertical();
+        }
+
+        private void CreateKeyframeArrowControls()
+        {
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("<<"))
             {
                 var keyframe = keyFrames.FirstOrDefault();
@@ -125,10 +131,7 @@ namespace XLPrecisionKeyframes.UserInterface
                 var keyframe = keyFrames.LastOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? ReplayEditorController.Instance.playbackController.ClipEndTime);
             }
-
             GUILayout.EndHorizontal();
-
-            GUILayout.EndVertical();
         }
 
         private void CreateCopyPasteControls()

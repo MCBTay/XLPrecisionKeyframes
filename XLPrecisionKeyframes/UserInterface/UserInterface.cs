@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
+using XLPrecisionKeyframes.UserInterface.Popups;
 
 namespace XLPrecisionKeyframes.UserInterface
 {

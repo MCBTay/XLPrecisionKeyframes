@@ -2,7 +2,7 @@
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes.UserInterface
+namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditTimeUI : EditBaseUI
     {

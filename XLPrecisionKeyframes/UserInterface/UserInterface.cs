@@ -255,7 +255,7 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Position</b>");
 
-            if (GUILayout.Button("Edit"))
+            if (GUILayout.Button("Edit", GUILayout.Width(50)))
             {
                 EditPositionUI.Show(displayed.position);
             }
@@ -278,7 +278,7 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Rotation</b>");
 
-            if (GUILayout.Button("Edit"))
+            if (GUILayout.Button("Edit", GUILayout.Width(50)))
             {
                 EditRotationUI.Show(displayed.rotation);
             }
@@ -303,7 +303,7 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Time</b>");
 
-            if (GUILayout.Button("Edit"))
+            if (GUILayout.Button("Edit", GUILayout.Width(50)))
             {
                 EditTimeUI.Show(displayed.time);
             }
@@ -330,7 +330,7 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginHorizontal();
             GUILayout.Label("<b>Field of View</b>");
 
-            if (GUILayout.Button("Edit"))
+            if (GUILayout.Button("Edit", GUILayout.Width(50)))
             {
                 EditFovUI.Show(displayed.fov);
             }

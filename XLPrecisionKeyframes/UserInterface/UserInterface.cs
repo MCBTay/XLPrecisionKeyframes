@@ -2,6 +2,7 @@
 using ReplayEditor;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 using XLPrecisionKeyframes.UserInterface.Popups;
@@ -93,17 +94,27 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.BeginVertical();
 
-            if (!string.IsNullOrEmpty(currentKeyframeName))
-            {
-                GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
-                {
-                    alignment = TextAnchor.MiddleCenter,
-                    fontStyle = FontStyle.Bold
-                });
-            }
-            
-            GUILayout.BeginHorizontal();
+            CreateKeyframeNameControl();
+            CreateKeyframeArrowControls();
+            CreateKeyframeDeleteButtons();
 
+            GUILayout.EndVertical();
+        }
+
+        private void CreateKeyframeNameControl()
+        {
+            if (string.IsNullOrEmpty(currentKeyframeName)) return;
+
+            GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold
+            });
+        }
+
+        private void CreateKeyframeArrowControls()
+        {
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("<<"))
             {
                 var keyframe = keyFrames.FirstOrDefault();
@@ -125,10 +136,51 @@ namespace XLPrecisionKeyframes.UserInterface
                 var keyframe = keyFrames.LastOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? ReplayEditorController.Instance.playbackController.ClipEndTime);
             }
-
             GUILayout.EndHorizontal();
+        }
 
-            GUILayout.EndVertical();
+        private void CreateKeyframeDeleteButtons()
+        {
+            if (keyFrames == null) return;
+            if (!keyFrames.Any()) return;
+
+            GUILayout.BeginHorizontal();
+            CreateKeyframeDeleteButton();
+            CreateKeyframeDeleteAllButton();
+            GUILayout.EndHorizontal();
+        }
+
+        private void CreateKeyframeDeleteButton()
+        {
+            if (string.IsNullOrEmpty(currentKeyframeName)) return;
+
+            if (!GUILayout.Button("Delete")) return;
+
+            var index = currentKeyframeName.Split(' ').LastOrDefault();
+            if (string.IsNullOrEmpty(index)) return;
+
+            if (!int.TryParse(index, out var keyframeIndex)) return;
+
+            var camController = ReplayEditorController.Instance.cameraController;
+
+            UISounds.Instance.PlayOneShotSelectMinor();
+
+            // subtract 1 here because we add 1 to the text we're parsing this from for user display reasons
+            // keyframe index should always be >= 1
+            Traverse.Create(camController).Method("DeleteKeyFrame", keyframeIndex - 1, true).GetValue();
+            camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
+        }
+
+        private void CreateKeyframeDeleteAllButton()
+        {
+            if (!GUILayout.Button("Delete All")) return;
+
+            UISounds.Instance.PlayOneShotSelectMinor();
+
+            var camController = ReplayEditorController.Instance.cameraController;
+
+            camController.DeleteAllKeyFrames();
+            camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
         }
 
         private void CreateCopyPasteControls()

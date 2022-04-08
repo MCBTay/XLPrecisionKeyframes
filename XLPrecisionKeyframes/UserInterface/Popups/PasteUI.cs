@@ -64,14 +64,19 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void CreateSaveButton()
         {
-            if (string.IsNullOrEmpty(pastedJson)) return;
+            GUI.enabled = !string.IsNullOrEmpty(pastedJson);
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.normal.textColor = buttonStyle.hover.textColor = parseFailed ? Color.red : Color.white;
-            
-            if (!GUILayout.Button(ButtonLabel.Save, buttonStyle)) return;
+
+            if (!GUILayout.Button(ButtonLabel.Save, buttonStyle))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
             Save();
+            GUI.enabled = true;
         }
 
         private void SetValue<T>(UserInterfacePopup<T> ui, KeyframeInfo keyframe) where T : EditBaseUI

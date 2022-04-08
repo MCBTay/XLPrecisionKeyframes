@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityModManagerNet;
@@ -27,6 +29,37 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
             SanitizeDiscordTags();
 
+            var keyframes = TrySingleDeserialize();
+            if (!keyframes.Any())
+            {
+                keyframes = TryListDeserialize();
+            }
+
+            if (!keyframes.Any())
+            {
+                parseFailed = true;
+                UnityModManager.Logger.Log("XLPK: Unable to deserialize JSON:" + Environment.NewLine + pastedJson);
+            }
+
+            foreach (var keyframe in keyframes)
+            {
+
+            }
+
+
+
+            //SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
+            //SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
+            //SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
+
+            pastedJson = string.Empty;
+            parseFailed = false;
+
+            base.Save();
+        }
+
+        private List<KeyframeInfo> TrySingleDeserialize()
+        {
             KeyframeInfo keyFrameInfo = null;
 
             try
@@ -35,25 +68,36 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
                 if (keyFrameInfo == null)
                 {
-                    parseFailed = true;
-                    return;
+                    return new List<KeyframeInfo>();
                 }
             }
             catch (Exception ex)
             {
-                parseFailed = true;
-                UnityModManager.Logger.Log("XLPK: Exception caught deserializing JSON: " + pastedJson + ex);
-                return;
+                return new List<KeyframeInfo>();
             }
 
-            SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
+            return new List<KeyframeInfo> { keyFrameInfo };
+        }
 
-            pastedJson = string.Empty;
-            parseFailed = false;
+        private List<KeyframeInfo> TryListDeserialize()
+        {
+            List<KeyframeInfo> keyFrameInfo = null;
 
-            base.Save();
+            try
+            {
+                keyFrameInfo = JsonConvert.DeserializeObject<List<KeyframeInfo>>(pastedJson);
+
+                if (keyFrameInfo == null)
+                {
+                    return new List<KeyframeInfo>();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<KeyframeInfo>();
+            }
+
+            return keyFrameInfo;
         }
 
         protected override void Cancel()

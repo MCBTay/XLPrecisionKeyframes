@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Linq;
+using HarmonyLib;
 using System.Reflection;
 using UnityEngine;
 using UnityModManagerNet;
@@ -12,6 +13,8 @@ namespace XLPrecisionKeyframes
     {
         public static bool Enabled;
         private static Harmony Harmony;
+
+        public static bool XLGraphicsEnabled { get; private set; }
 
         public static GameObject UserInterfaceGameObject;
 
@@ -44,6 +47,14 @@ namespace XLPrecisionKeyframes
             {
                 Harmony = new Harmony(modEntry.Info.Id);
                 Harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+                var xlGraphics = UnityModManager.modEntries.FirstOrDefault(x => x.Info.Id == "XLGraphics");
+                if (xlGraphics != null)
+                {
+                    XLGraphicsEnabled = xlGraphics.Enabled;
+                }
+
+                UnityModManager.Logger.Log($"XLPK: XLGraphicsEnabled = {XLGraphicsEnabled}.");
             }
             else
             {

@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Keyframes\FieldOfViewInfo.cs" />
     <Compile Include="Keyframes\KeyframeInfo.cs" />
     <Compile Include="Keyframes\PositionInfo.cs" />
@@ -87,14 +88,15 @@
     <Compile Include="Patches\ReplayStatePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="UserInterface\EditBaseUI.cs" />
-    <Compile Include="UserInterface\EditPositionUI.cs" />
-    <Compile Include="UserInterface\EditRotationUI.cs" />
-    <Compile Include="UserInterface\EditTimeUI.cs" />
-    <Compile Include="UserInterface\EditFieldOfViewUI.cs" />
-    <Compile Include="UserInterface\PasteUI.cs" />
+    <Compile Include="UserInterface\Popups\EditBaseUI.cs" />
+    <Compile Include="UserInterface\Popups\EditPositionUI.cs" />
+    <Compile Include="UserInterface\Popups\EditRotationUI.cs" />
+    <Compile Include="UserInterface\Popups\EditTimeUI.cs" />
+    <Compile Include="UserInterface\Popups\EditFieldOfViewUI.cs" />
+    <Compile Include="UserInterface\Popups\OffsetKeyframesUI.cs" />
+    <Compile Include="UserInterface\Popups\PasteUI.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
-    <Compile Include="UserInterface\UserInterfacePopup.cs" />
+    <Compile Include="UserInterface\Popups\UserInterfacePopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">

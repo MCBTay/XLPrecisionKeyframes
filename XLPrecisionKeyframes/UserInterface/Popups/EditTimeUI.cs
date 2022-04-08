@@ -2,12 +2,12 @@
 using UnityEngine;
 using XLPrecisionKeyframes.Keyframes;
 
-namespace XLPrecisionKeyframes.UserInterface
+namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditTimeUI : EditBaseUI
     {
-        public float time;
-        public float originalTime;
+        public float time { get; set; }
+        public float originalTime { get; set; }
 
         private string timeString;
 
@@ -20,8 +20,8 @@ namespace XLPrecisionKeyframes.UserInterface
 
         protected override void OnGUI()
         {
-            StartingYPos = 280;
-            WindowLabel = "Edit Time";
+            StartingYPos = 325;
+            Label = WindowLabel.EditTime;
 
             base.OnGUI();
         }
@@ -39,7 +39,7 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             GUILayout.BeginVertical();
 
-            timeString = CreateFloatField("Time", timeString);
+            timeString = CreateFloatField(FieldLabel.Time, timeString);
 
             GUILayout.EndVertical();
         }

@@ -26,7 +26,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private bool hasKeyframes => keyFrames != null && !keyFrames.Any();
 
-        private string currentKeyframeName = FieldLabel.NoKeyframe;
+        private static string currentKeyframeName = FieldLabel.NoKeyframe;
 
         public UserInterfacePopup<PasteUI> PasteUI { get; set; }
         public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }

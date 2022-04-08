@@ -14,6 +14,7 @@
 
     public static class FieldLabel
     {
+        public const string CreateOnSave = "Create on Save";
         public const string FieldOfView = "Field of View";
         public const string FromEnd = "From End";
         public const string KeyframeNumber = "Keyframe {0}";

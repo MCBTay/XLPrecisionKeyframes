@@ -21,7 +21,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         protected override void OnGUI()
         {
             StartingYPos = 345;
-            WindowLabel = "Edit FOV";
+            Label = WindowLabel.EditFieldOfView;
 
             base.OnGUI();
         }
@@ -39,7 +39,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         {
             GUILayout.BeginVertical();
 
-            fovString = CreateFloatField("Field of View", fovString);
+            fovString = CreateFloatField(FieldLabel.FieldOfView, fovString);
 
             GUILayout.EndVertical();
         }

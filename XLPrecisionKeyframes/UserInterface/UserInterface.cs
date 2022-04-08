@@ -25,7 +25,7 @@ namespace XLPrecisionKeyframes.UserInterface
         public static List<KeyFrame> keyFrames = new List<KeyFrame>();
         public bool hasKeyframes => keyFrames != null && !keyFrames.Any();
 
-        public static string currentKeyframeName = "No Keyframe";
+        public static string currentKeyframeName = FieldLabel.NoKeyframe;
 
         public UserInterfacePopup<PasteUI> PasteUI { get; set; }
         public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }
@@ -70,7 +70,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             var rect = new Rect(Settings.Instance.WindowXPos, Settings.Instance.WindowYPos, 250, 465);
 
-            GUILayout.Window(854, rect, DrawWindow, "XL Precision Keyframes", style);
+            GUILayout.Window(854, rect, DrawWindow, WindowLabel.XLPrecisionKeyframes, style);
         }
 
         private void DrawWindow(int windowID)
@@ -117,23 +117,23 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("<<"))
+            if (GUILayout.Button(FieldLabel.DoubleLeft))
             {
                 var keyframe = keyFrames.FirstOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? 0);
             }
 
-            if (GUILayout.Button("<"))
+            if (GUILayout.Button(FieldLabel.Left))
             {
                 ReplayEditorController.Instance.JumpByTime(-ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
             }
 
-            if (GUILayout.Button(">"))
+            if (GUILayout.Button(FieldLabel.Right))
             {
                 ReplayEditorController.Instance.JumpByTime(ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
             }
 
-            if (GUILayout.Button(">>"))
+            if (GUILayout.Button(FieldLabel.DoubleRight))
             {
                 var keyframe = keyFrames.LastOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? ReplayEditorController.Instance.playbackController.ClipEndTime);
@@ -158,9 +158,9 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void CreateKeyframeDeleteButton()
         {
-            GUI.enabled = currentKeyframeName != "No Keyframe";
+            GUI.enabled = currentKeyframeName != FieldLabel.NoKeyframe;
 
-            if (!GUILayout.Button("Delete"))
+            if (!GUILayout.Button(ButtonLabel.Delete))
             {
                 GUI.enabled = true;
                 return;
@@ -195,7 +195,7 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             GUI.enabled = !hasKeyframes;
 
-            if (!GUILayout.Button("Delete All"))
+            if (!GUILayout.Button(ButtonLabel.DeleteAll))
             {
                 GUI.enabled = true;
                 return;
@@ -216,20 +216,20 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Copy"))
+            if (GUILayout.Button(ButtonLabel.Copy))
             {
                 AddToClipboard(displayed);
             }
 
             GUI.enabled = !hasKeyframes;
-            if (GUILayout.Button("Copy All"))
+            if (GUILayout.Button(ButtonLabel.CopyAll))
             {
                 var frames = keyFrames.Select(frame => new KeyframeInfo(frame)).ToList();
                 AddToClipboard(frames);
             }
             GUI.enabled = true;
 
-            if (GUILayout.Button("Paste JSON"))
+            if (GUILayout.Button(ButtonLabel.Paste))
             {
                 PasteUI.Show();
             }
@@ -253,17 +253,17 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("<b>Position</b>");
+            GUILayout.Label($"<b>{FieldLabel.Position}</b>");
 
-            if (GUILayout.Button("Edit", GUILayout.Width(50)))
+            if (GUILayout.Button(ButtonLabel.Edit, GUILayout.Width(50)))
             {
                 EditPositionUI.Show(displayed.position);
             }
             GUILayout.EndHorizontal();
 
-            CreateFloatField("X", displayed.position.x);
-            CreateFloatField("Y", displayed.position.y);
-            CreateFloatField("Z", displayed.position.z);
+            CreateFloatField(FieldLabel.X, displayed.position.x);
+            CreateFloatField(FieldLabel.Y, displayed.position.y);
+            CreateFloatField(FieldLabel.Z, displayed.position.z);
 
             GUILayout.EndVertical();
         }
@@ -276,19 +276,19 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("<b>Rotation</b>");
+            GUILayout.Label($"<b>{FieldLabel.Rotation}</b>");
 
-            if (GUILayout.Button("Edit", GUILayout.Width(50)))
+            if (GUILayout.Button(ButtonLabel.Edit, GUILayout.Width(50)))
             {
                 EditRotationUI.Show(displayed.rotation);
             }
 
             GUILayout.EndHorizontal();
 
-            CreateFloatField("X", displayed.rotation.x);
-            CreateFloatField("Y", displayed.rotation.y);
-            CreateFloatField("Z", displayed.rotation.z);
-            CreateFloatField("W", displayed.rotation.w);
+            CreateFloatField(FieldLabel.X, displayed.rotation.x);
+            CreateFloatField(FieldLabel.Y, displayed.rotation.y);
+            CreateFloatField(FieldLabel.Z, displayed.rotation.z);
+            CreateFloatField(FieldLabel.W, displayed.rotation.w);
 
             GUILayout.EndVertical();
         }
@@ -301,20 +301,20 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("<b>Time</b>");
+            GUILayout.Label($"<b>{FieldLabel.Time}</b>");
 
-            if (GUILayout.Button("Edit", GUILayout.Width(50)))
+            if (GUILayout.Button(ButtonLabel.Edit, GUILayout.Width(50)))
             {
                 EditTimeUI.Show(displayed.time);
             }
             GUILayout.EndHorizontal();
 
-            CreateFloatField("Time", displayed.time.time.ToString("F8"));
-            CreateFloatField("From End", displayed.time.timeFromEnd.ToString("F8"));
+            CreateFloatField(FieldLabel.Time, displayed.time.time.ToString("F8"));
+            CreateFloatField(FieldLabel.FromEnd, displayed.time.timeFromEnd.ToString("F8"));
 
             GUI.enabled = !hasKeyframes;
-            CreateFloatField("To Prev Keyframe", displayed.time.timeFromPrevKeyframe.ToString("F8"));
-            CreateFloatField("To Next Keyframe", displayed.time.timeFromNextKeyframe.ToString("F8"));
+            CreateFloatField(FieldLabel.ToPrevKeyframe, displayed.time.timeFromPrevKeyframe.ToString("F8"));
+            CreateFloatField(FieldLabel.ToNextKeyframe, displayed.time.timeFromNextKeyframe.ToString("F8"));
             GUI.enabled = true;
 
             GUILayout.EndVertical();
@@ -328,15 +328,15 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("<b>Field of View</b>");
+            GUILayout.Label($"<b>{FieldLabel.FieldOfView}</b>");
 
-            if (GUILayout.Button("Edit", GUILayout.Width(50)))
+            if (GUILayout.Button(ButtonLabel.Edit, GUILayout.Width(50)))
             {
                 EditFovUI.Show(displayed.fov);
             }
             GUILayout.EndHorizontal();
 
-            CreateFloatField("FOV", displayed.fov.fov.ToString("F5"));
+            CreateFloatField(FieldLabel.FieldOfView, displayed.fov.fov.ToString("F5"));
 
             GUILayout.EndVertical();
         }
@@ -361,7 +361,9 @@ namespace XLPrecisionKeyframes.UserInterface
             keyFrames = frames;
 
             var match = keyFrames.FirstOrDefault(x => Mathf.Approximately(x.time, time ?? 0));
-            currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : "No Keyframe";
+            currentKeyframeName = match != null ? 
+                string.Format(FieldLabel.KeyframeNumber, keyFrames.IndexOf(match) + 1) : 
+                FieldLabel.NoKeyframe;
         }
         
         public void UpdateTextFields(Transform cameraTransform, float? time, float? fov)

@@ -16,7 +16,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         {
             StartingYPos = 40;
             IgnoreYPosChanges = true;
-            WindowLabel = "Paste Keyframe JSON";
+            Label = "Paste Keyframe JSON";
             Height = 465;
 
             base.OnGUI();
@@ -70,7 +70,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.normal.textColor = buttonStyle.hover.textColor = parseFailed ? Color.red : Color.white;
             
-            if (!GUILayout.Button("Save", buttonStyle)) return;
+            if (!GUILayout.Button(ButtonLabel.Save, buttonStyle)) return;
 
             Save();
         }

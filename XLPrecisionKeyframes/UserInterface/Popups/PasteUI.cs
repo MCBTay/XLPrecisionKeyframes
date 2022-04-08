@@ -1,10 +1,9 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using ReplayEditor;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityModManagerNet;
 using XLPrecisionKeyframes.Keyframes;
@@ -22,7 +21,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         protected override void OnGUI()
         {
             StartingYPos = 0;
-            Label = "Paste Keyframe JSON";
+            Label = WindowLabel.Paste;
             Height = 465;
 
             base.OnGUI();

@@ -86,6 +86,7 @@
     <Compile Include="UserInterface\Popups\EditRotationUI.cs" />
     <Compile Include="UserInterface\Popups\EditTimeUI.cs" />
     <Compile Include="UserInterface\Popups\EditFieldOfViewUI.cs" />
+    <Compile Include="UserInterface\Popups\OffsetKeyframesUI.cs" />
     <Compile Include="UserInterface\Popups\PasteUI.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
     <Compile Include="UserInterface\Popups\UserInterfacePopup.cs" />

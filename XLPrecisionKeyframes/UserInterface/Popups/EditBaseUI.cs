@@ -6,32 +6,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditBaseUI : MonoBehaviour
     {
-        private bool HasKeyframes => UserInterface.keyFrames != null && UserInterface.keyFrames.Any();
-        private bool HasKeyframeName => !string.IsNullOrEmpty(UserInterface.currentKeyframeName);
-
         protected float StartingYPos;
-        protected bool IgnoreYPosChanges;
         protected string Label;
         protected int Height = 50;
-
-        protected float GetYPos(float originalYPos)
-        {
-            var yPos = originalYPos;
-
-            if (IgnoreYPosChanges) return yPos;
-
-            switch (HasKeyframes)
-            {
-                case true when HasKeyframeName:
-                    yPos += 45;
-                    break;
-                case true:
-                    yPos += 25;
-                    break;
-            }
-
-            return yPos;
-        }
 
         protected string CreateFloatField(string label, string value)
         {
@@ -61,7 +38,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             };
 
             var xPos = Settings.Instance.WindowXPos + 255;
-            var rect = new Rect(xPos, GetYPos(StartingYPos), 200, Height);
+            var rect = new Rect(xPos, StartingYPos, 200, Height);
 
             GUILayout.Window(824, rect, DrawWindow, Label, style);
         }

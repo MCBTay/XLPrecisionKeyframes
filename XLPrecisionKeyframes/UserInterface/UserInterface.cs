@@ -23,8 +23,9 @@ namespace XLPrecisionKeyframes.UserInterface
         /// A list of keyframes that are currently in editor.  Currently used for the keyframe controls, knowing whether to hide them or how to cycle through them.
         /// </summary>
         public static List<KeyFrame> keyFrames = new List<KeyFrame>();
+        public bool hasKeyframes => keyFrames != null && !keyFrames.Any();
 
-        public static string currentKeyframeName = "";
+        public static string currentKeyframeName = "No Keyframe";
 
         public UserInterfacePopup<PasteUI> PasteUI { get; set; }
         public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }
@@ -80,7 +81,6 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.BeginVertical();
 
             CreateKeyframeControls();
-            CreateCopyPasteControls();
             CreatePositionControls();
             CreateRotationControls();
             CreateTimeControls();
@@ -89,24 +89,21 @@ namespace XLPrecisionKeyframes.UserInterface
             GUILayout.EndVertical();
         }
 
+        #region Keyframe controls
         private void CreateKeyframeControls()
         {
-            if (keyFrames == null) return;
-            if (!keyFrames.Any()) return;
-
             GUILayout.BeginVertical();
 
             CreateKeyframeNameControl();
             CreateKeyframeArrowControls();
             CreateKeyframeDeleteButtons();
+            CreateCopyPasteControls();
 
             GUILayout.EndVertical();
         }
 
         private void CreateKeyframeNameControl()
         {
-            if (string.IsNullOrEmpty(currentKeyframeName)) return;
-
             GUILayout.Label(currentKeyframeName, new GUIStyle(GUI.skin.label)
             {
                 alignment = TextAnchor.MiddleCenter,
@@ -116,7 +113,10 @@ namespace XLPrecisionKeyframes.UserInterface
 
         private void CreateKeyframeArrowControls()
         {
+            GUI.enabled = !hasKeyframes;
+
             GUILayout.BeginHorizontal();
+
             if (GUILayout.Button("<<"))
             {
                 var keyframe = keyFrames.FirstOrDefault();
@@ -139,29 +139,45 @@ namespace XLPrecisionKeyframes.UserInterface
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? ReplayEditorController.Instance.playbackController.ClipEndTime);
             }
             GUILayout.EndHorizontal();
+
+            GUI.enabled = true;
         }
 
+        #region Delete buttons
         private void CreateKeyframeDeleteButtons()
         {
-            if (keyFrames == null) return;
-            if (!keyFrames.Any()) return;
+            GUI.enabled = !hasKeyframes;
 
             GUILayout.BeginHorizontal();
             CreateKeyframeDeleteButton();
             CreateKeyframeDeleteAllButton();
             GUILayout.EndHorizontal();
+
+            GUI.enabled = true;
         }
 
         private void CreateKeyframeDeleteButton()
         {
-            if (string.IsNullOrEmpty(currentKeyframeName)) return;
+            GUI.enabled = currentKeyframeName != "No Keyframe";
 
-            if (!GUILayout.Button("Delete")) return;
+            if (!GUILayout.Button("Delete"))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
             var index = currentKeyframeName.Split(' ').LastOrDefault();
-            if (string.IsNullOrEmpty(index)) return;
+            if (string.IsNullOrEmpty(index))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
-            if (!int.TryParse(index, out var keyframeIndex)) return;
+            if (!int.TryParse(index, out var keyframeIndex))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
             var camController = ReplayEditorController.Instance.cameraController;
 
@@ -171,11 +187,19 @@ namespace XLPrecisionKeyframes.UserInterface
             // keyframe index should always be >= 1
             Traverse.Create(camController).Method("DeleteKeyFrame", keyframeIndex - 1, true).GetValue();
             camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
+
+            GUI.enabled = true;
         }
 
         private void CreateKeyframeDeleteAllButton()
         {
-            if (!GUILayout.Button("Delete All")) return;
+            GUI.enabled = !hasKeyframes;
+
+            if (!GUILayout.Button("Delete All"))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
             UISounds.Instance.PlayOneShotSelectMinor();
 
@@ -183,12 +207,13 @@ namespace XLPrecisionKeyframes.UserInterface
 
             camController.DeleteAllKeyFrames();
             camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
+
+            GUI.enabled = true;
         }
+        #endregion
 
         private void CreateCopyPasteControls()
         {
-            GUILayout.BeginVertical();
-
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Copy"))
@@ -196,12 +221,13 @@ namespace XLPrecisionKeyframes.UserInterface
                 AddToClipboard(displayed);
             }
 
+            GUI.enabled = !hasKeyframes;
             if (GUILayout.Button("Copy All"))
             {
                 var frames = keyFrames.Select(frame => new KeyframeInfo(frame)).ToList();
-
                 AddToClipboard(frames);
             }
+            GUI.enabled = true;
 
             if (GUILayout.Button("Paste JSON"))
             {
@@ -209,8 +235,6 @@ namespace XLPrecisionKeyframes.UserInterface
             }
 
             GUILayout.EndHorizontal();
-
-            GUILayout.EndVertical();
         }
 
         private void AddToClipboard(object o)
@@ -219,6 +243,7 @@ namespace XLPrecisionKeyframes.UserInterface
             json = $"```json\n{json}\n```";
             GUIUtility.systemCopyBuffer = json;
         }
+        #endregion
 
         /// <summary>
         /// Creates the position edit section, which contains a Position label and X, Y, and Z fields.
@@ -287,11 +312,10 @@ namespace XLPrecisionKeyframes.UserInterface
             CreateFloatField("Time", displayed.time.time.ToString("F8"));
             CreateFloatField("From End", displayed.time.timeFromEnd.ToString("F8"));
 
-            if (keyFrames != null && keyFrames.Any())
-            {
-                CreateFloatField("To Prev Keyframe", displayed.time.timeFromPrevKeyframe.ToString("F8"));
-                CreateFloatField("To Next Keyframe", displayed.time.timeFromNextKeyframe.ToString("F8"));
-            }
+            GUI.enabled = !hasKeyframes;
+            CreateFloatField("To Prev Keyframe", displayed.time.timeFromPrevKeyframe.ToString("F8"));
+            CreateFloatField("To Next Keyframe", displayed.time.timeFromNextKeyframe.ToString("F8"));
+            GUI.enabled = true;
 
             GUILayout.EndVertical();
         }
@@ -337,7 +361,7 @@ namespace XLPrecisionKeyframes.UserInterface
             keyFrames = frames;
 
             var match = keyFrames.FirstOrDefault(x => Mathf.Approximately(x.time, time ?? 0));
-            currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : string.Empty;
+            currentKeyframeName = match != null ? $"Keyframe {keyFrames.IndexOf(match) + 1}" : "No Keyframe";
         }
         
         public void UpdateTextFields(Transform cameraTransform, float? time, float? fov)

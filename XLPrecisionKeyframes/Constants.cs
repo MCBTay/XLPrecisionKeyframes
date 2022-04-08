@@ -44,6 +44,8 @@
         public const string EditPosition = "Edit Position";
         public const string EditRotation = "Edit Rotation";
         public const string EditTime = "Edit Time";
+        public const string OffsetKeyframes = "Offset Keyframes";
+        public const string Paste = "Paste Keyframe JSON";
 
         public const string XLPrecisionKeyframes = "XL Precision Keyframes";
     }

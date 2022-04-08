@@ -17,7 +17,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 235;
+            StartingYPos = 195;
             Label = WindowLabel.EditRotation;
 
             base.OnGUI();

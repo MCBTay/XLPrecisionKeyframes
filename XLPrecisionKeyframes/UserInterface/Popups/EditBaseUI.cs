@@ -38,7 +38,8 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             };
 
             var xPos = Settings.Instance.WindowXPos + 255;
-            var rect = new Rect(xPos, StartingYPos, 200, Height);
+            var yPos = Settings.Instance.WindowYPos + StartingYPos;
+            var rect = new Rect(xPos, yPos, 200, Height);
 
             GUILayout.Window(824, rect, DrawWindow, Label, style);
         }

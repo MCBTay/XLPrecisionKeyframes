@@ -17,8 +17,8 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 170;
-            WindowLabel = "Edit Rotation";
+            StartingYPos = 195;
+            Label = WindowLabel.EditRotation;
 
             base.OnGUI();
         }
@@ -33,10 +33,10 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         {
             GUILayout.BeginVertical();
 
-            rotation.x = CreateFloatField("X", rotation.x);
-            rotation.y = CreateFloatField("Y", rotation.y);
-            rotation.z = CreateFloatField("Z", rotation.z);
-            rotation.w = CreateFloatField("W", rotation.w);
+            rotation.x = CreateFloatField(FieldLabel.X, rotation.x);
+            rotation.y = CreateFloatField(FieldLabel.Y, rotation.y);
+            rotation.z = CreateFloatField(FieldLabel.Z, rotation.z);
+            rotation.w = CreateFloatField(FieldLabel.W, rotation.w);
 
             GUILayout.EndVertical();
         }

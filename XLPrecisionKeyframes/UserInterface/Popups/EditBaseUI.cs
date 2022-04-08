@@ -6,31 +6,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 {
     public class EditBaseUI : MonoBehaviour
     {
-        private bool HasKeyframes => UserInterface.keyFrames != null && UserInterface.keyFrames.Any();
-        private bool HasKeyframeName => !string.IsNullOrEmpty(UserInterface.currentKeyframeName);
-
         protected float StartingYPos;
-        protected bool IgnoreYPosChanges;
-        protected string WindowLabel;
-
-        protected float GetYPos(float originalYPos)
-        {
-            var yPos = originalYPos;
-
-            if (IgnoreYPosChanges) return yPos;
-
-            switch (HasKeyframes)
-            {
-                case true when HasKeyframeName:
-                    yPos += 45;
-                    break;
-                case true:
-                    yPos += 25;
-                    break;
-            }
-
-            return yPos;
-        }
+        protected string Label;
+        protected int Height = 50;
 
         protected string CreateFloatField(string label, string value)
         {
@@ -60,7 +38,10 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             };
 
             var xPos = Settings.Instance.WindowXPos + 255;
-            GUILayout.Window(824, new Rect(xPos, GetYPos(StartingYPos), 200, 50), DrawWindow, WindowLabel, style);
+            var yPos = Settings.Instance.WindowYPos + StartingYPos;
+            var rect = new Rect(xPos, yPos, 200, Height);
+
+            GUILayout.Window(824, rect, DrawWindow, Label, style);
         }
 
         protected virtual void DrawWindow(int windowID)
@@ -89,14 +70,14 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected virtual void CreateSaveButton()
         {
-            if (!GUILayout.Button("Save")) return;
+            if (!GUILayout.Button(ButtonLabel.Save)) return;
 
             Save();
         }
 
         protected virtual void CreateCancelButton()
         {
-            if (!GUILayout.Button("Cancel")) return;
+            if (!GUILayout.Button(ButtonLabel.Cancel)) return;
                 
             Cancel();
         }

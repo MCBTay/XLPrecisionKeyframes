@@ -17,8 +17,8 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 85;
-            WindowLabel = "Edit Position";
+            StartingYPos = 110;
+            Label = WindowLabel.EditPosition;
 
             base.OnGUI();
         }
@@ -33,9 +33,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         {
             GUILayout.BeginVertical();
 
-            position.x = CreateFloatField("X", position.x);
-            position.y = CreateFloatField("Y", position.y);
-            position.z = CreateFloatField("Z", position.z);
+            position.x = CreateFloatField(FieldLabel.X, position.x);
+            position.y = CreateFloatField(FieldLabel.Y, position.y);
+            position.z = CreateFloatField(FieldLabel.Z, position.z);
 
             GUILayout.EndVertical();
         }

@@ -20,8 +20,8 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 280;
-            WindowLabel = "Edit Time";
+            StartingYPos = 305;
+            Label = WindowLabel.EditTime;
 
             base.OnGUI();
         }
@@ -39,7 +39,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         {
             GUILayout.BeginVertical();
 
-            timeString = CreateFloatField("Time", timeString);
+            timeString = CreateFloatField(FieldLabel.Time, timeString);
 
             GUILayout.EndVertical();
         }

@@ -14,9 +14,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 40;
-            IgnoreYPosChanges = true;
-            WindowLabel = "Paste Keyframe JSON";
+            StartingYPos = 0;
+            Label = "Paste Keyframe JSON";
+            Height = 465;
 
             base.OnGUI();
         }
@@ -64,14 +64,19 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void CreateSaveButton()
         {
-            if (string.IsNullOrEmpty(pastedJson)) return;
+            GUI.enabled = !string.IsNullOrEmpty(pastedJson);
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.normal.textColor = buttonStyle.hover.textColor = parseFailed ? Color.red : Color.white;
-            
-            if (!GUILayout.Button("Save", buttonStyle)) return;
+
+            if (!GUILayout.Button(ButtonLabel.Save, buttonStyle))
+            {
+                GUI.enabled = true;
+                return;
+            }
 
             Save();
+            GUI.enabled = true;
         }
 
         private void SetValue<T>(UserInterfacePopup<T> ui, KeyframeInfo keyframe) where T : EditBaseUI

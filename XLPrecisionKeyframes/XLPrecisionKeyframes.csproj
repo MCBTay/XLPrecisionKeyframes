@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Keyframes\FieldOfViewInfo.cs" />
     <Compile Include="Keyframes\KeyframeInfo.cs" />
     <Compile Include="Keyframes\PositionInfo.cs" />

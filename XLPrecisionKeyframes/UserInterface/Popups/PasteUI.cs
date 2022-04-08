@@ -1,4 +1,7 @@
 ﻿using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using ReplayEditor;
 using System;
@@ -31,35 +34,33 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
             SanitizeDiscordTags();
 
-            KeyframeInfo keyFrameInfo = null;
-
-            try
+            var keyframes = TrySingleDeserialize();
+            if (!keyframes.Any())
             {
-                keyFrameInfo = JsonConvert.DeserializeObject<KeyframeInfo>(pastedJson);
-
-                if (keyFrameInfo == null)
-                {
-                    parseFailed = true;
-                    return;
-                }
+                keyframes = TryListDeserialize();
             }
-            catch (Exception ex)
+
+            if (!keyframes.Any())
             {
                 parseFailed = true;
-                UnityModManager.Logger.Log("XLPK: Exception caught deserializing JSON: " + pastedJson + ex);
-                return;
+                UnityModManager.Logger.Log("XLPK: Unable to deserialize JSON:" + Environment.NewLine + pastedJson);
             }
 
-            SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
+            var camController = ReplayEditorController.Instance.cameraController;
+
+            foreach (var keyframe in keyframes)
+            {
+                SetValue(UserInterface.Instance.EditPositionUI, keyframe);
+                SetValue(UserInterface.Instance.EditRotationUI, keyframe);
+                SetValue(UserInterface.Instance.EditFovUI, keyframe);
+                if (!createKeyframeOnSave) continue;
+
+                SetValue(UserInterface.Instance.EditTimeUI, keyframe);
+                Traverse.Create(camController).Method("AddKeyFrame", keyframe.time.time).GetValue();
+            }
+
             if (createKeyframeOnSave)
             {
-                SetValue(UserInterface.Instance.EditTimeUI, keyFrameInfo);
-
-                var camController = ReplayEditorController.Instance.cameraController;
-
-                Traverse.Create(camController).Method("AddKeyFrame", keyFrameInfo.time.time).GetValue();
                 camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
                 UISounds.Instance.PlayOneShotSelectMinor();
             }
@@ -68,6 +69,48 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             parseFailed = false;
 
             base.Save();
+        }
+
+        private List<KeyframeInfo> TrySingleDeserialize()
+        {
+            KeyframeInfo keyFrameInfo = null;
+
+            try
+            {
+                keyFrameInfo = JsonConvert.DeserializeObject<KeyframeInfo>(pastedJson);
+
+                if (keyFrameInfo == null)
+                {
+                    return new List<KeyframeInfo>();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<KeyframeInfo>();
+            }
+
+            return new List<KeyframeInfo> { keyFrameInfo };
+        }
+
+        private List<KeyframeInfo> TryListDeserialize()
+        {
+            List<KeyframeInfo> keyFrameInfo = null;
+
+            try
+            {
+                keyFrameInfo = JsonConvert.DeserializeObject<List<KeyframeInfo>>(pastedJson);
+
+                if (keyFrameInfo == null)
+                {
+                    return new List<KeyframeInfo>();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<KeyframeInfo>();
+            }
+
+            return keyFrameInfo;
         }
 
         protected override void Cancel()

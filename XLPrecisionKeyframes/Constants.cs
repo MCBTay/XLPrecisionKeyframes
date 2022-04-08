@@ -1,6 +1,6 @@
 ﻿namespace XLPrecisionKeyframes
 {
-    public class ButtonLabel
+    public static class ButtonLabel
     {
         public const string Cancel = "Cancel";
         public const string Copy = "Copy";
@@ -12,7 +12,7 @@
         public const string Save = "Save";
     }
 
-    public class FieldLabel
+    public static class FieldLabel
     {
         public const string FieldOfView = "Field of View";
         public const string FromEnd = "From End";
@@ -35,7 +35,7 @@
         public const string DoubleRight = ">>";
     }
 
-    public class WindowLabel
+    public static class WindowLabel
     {
         public const string EditFieldOfView = "Edit Field of View";
         public const string EditPosition = "Edit Position";

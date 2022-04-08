@@ -25,6 +25,7 @@
         public const string FromEnd = "From End";
         public const string KeyframeNumber = "Keyframe {0}";
         public const string NoKeyframe = "No Keyframe";
+        public const string Offset = "Offset";
         public const string Position = "Position";
         public const string Rotation = "Rotation";
         public const string Time = "Time";

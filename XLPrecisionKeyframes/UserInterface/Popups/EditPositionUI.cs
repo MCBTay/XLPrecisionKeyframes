@@ -17,7 +17,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         protected override void OnGUI()
         {
-            StartingYPos = 130;
+            StartingYPos = 150;
             Label = WindowLabel.EditPosition;
 
             base.OnGUI();

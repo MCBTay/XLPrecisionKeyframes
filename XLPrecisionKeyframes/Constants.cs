@@ -8,8 +8,14 @@
         public const string Delete = "Delete";
         public const string DeleteAll = "Delete All";
         public const string Edit = "Edit";
+        public const string OffsetKeyframes = "Offset Keyframes";
         public const string Paste = "Paste JSON";
         public const string Save = "Save";
+
+        public const string DoubleLeft = "<<";
+        public const string Left = "<";
+        public const string Right = ">";
+        public const string DoubleRight = ">>";
     }
 
     public static class FieldLabel
@@ -29,11 +35,6 @@
         public const string Y = "Y";
         public const string Z = "Z";
         public const string W = "W";
-
-        public const string DoubleLeft = "<<";
-        public const string Left = "<";
-        public const string Right = ">";
-        public const string DoubleRight = ">>";
     }
 
     public static class WindowLabel

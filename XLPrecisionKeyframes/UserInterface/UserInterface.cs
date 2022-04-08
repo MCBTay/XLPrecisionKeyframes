@@ -94,12 +94,11 @@ namespace XLPrecisionKeyframes.UserInterface
         private void CreateKeyframeControls()
         {
             GUILayout.BeginVertical();
-
             CreateKeyframeNameControl();
             CreateKeyframeArrowControls();
             CreateKeyframeDeleteButtons();
             CreateCopyPasteControls();
-
+            CreateOffsetControls();
             GUILayout.EndVertical();
         }
 
@@ -118,23 +117,23 @@ namespace XLPrecisionKeyframes.UserInterface
 
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button(FieldLabel.DoubleLeft))
+            if (GUILayout.Button(ButtonLabel.DoubleLeft))
             {
                 var keyframe = keyFrames.FirstOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? 0);
             }
 
-            if (GUILayout.Button(FieldLabel.Left))
+            if (GUILayout.Button(ButtonLabel.Left))
             {
                 ReplayEditorController.Instance.JumpByTime(-ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
             }
 
-            if (GUILayout.Button(FieldLabel.Right))
+            if (GUILayout.Button(ButtonLabel.Right))
             {
                 ReplayEditorController.Instance.JumpByTime(ReplaySettings.Instance.PlaybackTimeJumpDelta, true);
             }
 
-            if (GUILayout.Button(FieldLabel.DoubleRight))
+            if (GUILayout.Button(ButtonLabel.DoubleRight))
             {
                 var keyframe = keyFrames.LastOrDefault();
                 ReplayEditorController.Instance.SetPlaybackTime(keyframe?.time ?? ReplayEditorController.Instance.playbackController.ClipEndTime);
@@ -236,6 +235,18 @@ namespace XLPrecisionKeyframes.UserInterface
             }
 
             GUILayout.EndHorizontal();
+        }
+
+        private void CreateOffsetControls()
+        {
+            GUI.enabled = !hasKeyframes;
+
+            if (GUILayout.Button(ButtonLabel.OffsetKeyframes))
+            {
+                
+            }
+
+            GUI.enabled = true;
         }
 
         private void AddToClipboard(object o)

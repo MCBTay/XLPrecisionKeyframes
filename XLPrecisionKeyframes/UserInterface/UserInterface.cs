@@ -29,6 +29,7 @@ namespace XLPrecisionKeyframes.UserInterface
         private static string currentKeyframeName = FieldLabel.NoKeyframe;
 
         public UserInterfacePopup<PasteUI> PasteUI { get; set; }
+        public UserInterfacePopup<OffsetKeyframesUI> OffsetKeyframesUI { get; set; }
         public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }
         public UserInterfacePopup<EditRotationUI> EditRotationUI { get; set; }
         public UserInterfacePopup<EditTimeUI> EditTimeUI { get; set; }
@@ -37,6 +38,7 @@ namespace XLPrecisionKeyframes.UserInterface
         private void OnEnable()
         {
             PasteUI = new UserInterfacePopup<PasteUI>();
+            OffsetKeyframesUI = new UserInterfacePopup<OffsetKeyframesUI>();
             EditPositionUI = new UserInterfacePopup<EditPositionUI>();
             EditRotationUI = new UserInterfacePopup<EditRotationUI>();
             EditTimeUI = new UserInterfacePopup<EditTimeUI>();
@@ -49,6 +51,7 @@ namespace XLPrecisionKeyframes.UserInterface
         private void OnDisable()
         {
             PasteUI.Destroy();
+            OffsetKeyframesUI.Destroy();
             EditPositionUI.Destroy();
             EditRotationUI.Destroy();
             EditTimeUI.Destroy();
@@ -243,7 +246,7 @@ namespace XLPrecisionKeyframes.UserInterface
 
             if (GUILayout.Button(ButtonLabel.OffsetKeyframes))
             {
-                
+                OffsetKeyframesUI.Show();
             }
 
             GUI.enabled = true;

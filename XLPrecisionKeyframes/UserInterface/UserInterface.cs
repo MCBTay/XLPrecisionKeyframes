@@ -22,10 +22,11 @@ namespace XLPrecisionKeyframes.UserInterface
         /// <summary>
         /// A list of keyframes that are currently in editor.  Currently used for the keyframe controls, knowing whether to hide them or how to cycle through them.
         /// </summary>
-        public static List<KeyFrame> keyFrames = new List<KeyFrame>();
-        public bool hasKeyframes => keyFrames != null && !keyFrames.Any();
+        private static List<KeyFrame> keyFrames = new List<KeyFrame>();
 
-        public static string currentKeyframeName = FieldLabel.NoKeyframe;
+        private bool hasKeyframes => keyFrames != null && !keyFrames.Any();
+
+        private string currentKeyframeName = FieldLabel.NoKeyframe;
 
         public UserInterfacePopup<PasteUI> PasteUI { get; set; }
         public UserInterfacePopup<EditPositionUI> EditPositionUI { get; set; }

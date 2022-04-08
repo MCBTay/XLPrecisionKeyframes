@@ -1,7 +1,10 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using ReplayEditor;
+using System;
 using UnityEngine;
 using UnityModManagerNet;
 using XLPrecisionKeyframes.Keyframes;
@@ -13,6 +16,8 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         private string pastedJson;
 
         private bool parseFailed;
+
+        private bool createKeyframeOnSave = true;
 
         protected override void OnGUI()
         {
@@ -48,9 +53,19 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
 
 
-            //SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
-            //SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
-            //SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
+            SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
+            SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
+            SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
+            if (createKeyframeOnSave)
+            {
+                SetValue(UserInterface.Instance.EditTimeUI, keyFrameInfo);
+
+                var camController = ReplayEditorController.Instance.cameraController;
+
+                Traverse.Create(camController).Method("AddKeyFrame", keyFrameInfo.time.time).GetValue();
+                camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
+                UISounds.Instance.PlayOneShotSelectMinor();
+            }
 
             pastedJson = string.Empty;
             parseFailed = false;
@@ -141,6 +156,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
                 case UserInterfacePopup<EditFieldOfViewUI> fov:
                     ui.SetValue(keyframe.fov);
                     break;
+                case UserInterfacePopup<EditTimeUI> time:
+                    ui.SetValue(keyframe.time);
+                    break;
                 default: break;
             }
 
@@ -172,6 +190,15 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             GUILayout.BeginVertical();
             pastedJson = GUILayout.TextArea(pastedJson, GUILayout.ExpandHeight(true), GUILayout.MinHeight(200), GUILayout.MinHeight(400));
             GUILayout.EndVertical();
+        }
+
+        protected override void CreateSaveAndCancelButtons()
+        {
+            base.CreateSaveAndCancelButtons();
+
+            GUI.backgroundColor = Color.white;
+            createKeyframeOnSave = GUILayout.Toggle(createKeyframeOnSave, FieldLabel.CreateOnSave);
+            GUI.backgroundColor = Color.black;
         }
     }
 }

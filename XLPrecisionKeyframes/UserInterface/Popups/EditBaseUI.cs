@@ -12,6 +12,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
         protected float StartingYPos;
         protected bool IgnoreYPosChanges;
         protected string WindowLabel;
+        protected int Height = 50;
 
         protected float GetYPos(float originalYPos)
         {
@@ -60,7 +61,9 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             };
 
             var xPos = Settings.Instance.WindowXPos + 255;
-            GUILayout.Window(824, new Rect(xPos, GetYPos(StartingYPos), 200, 50), DrawWindow, WindowLabel, style);
+            var rect = new Rect(xPos, GetYPos(StartingYPos), 200, Height);
+
+            GUILayout.Window(824, rect, DrawWindow, WindowLabel, style);
         }
 
         protected virtual void DrawWindow(int windowID)

@@ -17,6 +17,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             StartingYPos = 40;
             IgnoreYPosChanges = true;
             WindowLabel = "Paste Keyframe JSON";
+            Height = 465;
 
             base.OnGUI();
         }

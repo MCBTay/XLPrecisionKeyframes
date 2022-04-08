@@ -46,23 +46,21 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
                 UnityModManager.Logger.Log("XLPK: Unable to deserialize JSON:" + Environment.NewLine + pastedJson);
             }
 
+            var camController = ReplayEditorController.Instance.cameraController;
+
             foreach (var keyframe in keyframes)
             {
+                SetValue(UserInterface.Instance.EditPositionUI, keyframe);
+                SetValue(UserInterface.Instance.EditRotationUI, keyframe);
+                SetValue(UserInterface.Instance.EditFovUI, keyframe);
+                if (!createKeyframeOnSave) continue;
 
+                SetValue(UserInterface.Instance.EditTimeUI, keyframe);
+                Traverse.Create(camController).Method("AddKeyFrame", keyframe.time.time).GetValue();
             }
 
-
-
-            SetValue(UserInterface.Instance.EditPositionUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditRotationUI, keyFrameInfo);
-            SetValue(UserInterface.Instance.EditFovUI, keyFrameInfo);
             if (createKeyframeOnSave)
             {
-                SetValue(UserInterface.Instance.EditTimeUI, keyFrameInfo);
-
-                var camController = ReplayEditorController.Instance.cameraController;
-
-                Traverse.Create(camController).Method("AddKeyFrame", keyFrameInfo.time.time).GetValue();
                 camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
                 UISounds.Instance.PlayOneShotSelectMinor();
             }

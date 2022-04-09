@@ -25,7 +25,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         public override void Save()
         {
-            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.position = position.ConvertToVector3();
+            ReplayEditorController.Instance.cameraController.VirtualCamera.transform.position = position.ConvertToVector3();
             base.Save();
         }
 

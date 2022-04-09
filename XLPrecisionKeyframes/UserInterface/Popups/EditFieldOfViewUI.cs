@@ -53,7 +53,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             }
             else
             {
-                ReplayEditorController.Instance.cameraController.ReplayCamera.fieldOfView = newFov;
+                ReplayEditorController.Instance.cameraController.VirtualCamera.m_Lens.FieldOfView = newFov;
             }
 
             base.Save();

@@ -22,11 +22,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
             if (!float.TryParse(offsetString, out var newOffset)) return;
 
             var camController = ReplayEditorController.Instance.cameraController;
-            foreach (var keyframe in camController.keyFrames)
-            {
-                keyframe.time += newOffset;
-            }
-
+            camController.MoveKeyframesBy(newOffset);
             camController.keyframeUI.UpdateKeyframes(camController.keyFrames);
 
             base.Save();

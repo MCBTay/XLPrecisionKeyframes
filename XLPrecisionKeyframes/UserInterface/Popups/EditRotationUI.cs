@@ -25,7 +25,7 @@ namespace XLPrecisionKeyframes.UserInterface.Popups
 
         public override void Save()
         {
-            ReplayEditorController.Instance.cameraController.ReplayCamera.transform.rotation = rotation.ConvertToQuaternion();
+            ReplayEditorController.Instance.cameraController.VirtualCamera.transform.rotation = rotation.ConvertToQuaternion();
             base.Save();
         }
 

@@ -72,7 +72,7 @@ jobs:
         echo "ARCHIVE_NAME=${archiveName}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
         
     - name: Upload XLPrecisionKeyframes.zip to release
-      uses: svenstaro/upload-release-action@v2.3.0
+      uses: svenstaro/upload-release-action@2.3.0
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.ARCHIVE_NAME }}

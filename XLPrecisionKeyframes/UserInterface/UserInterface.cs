@@ -17,7 +17,7 @@ namespace XLPrecisionKeyframes.UserInterface
         /// <summary>
         /// The currently displayed keyframe information.
         /// </summary>
-        private static KeyframeInfo displayed = new KeyframeInfo();
+        private static KeyframeInfo displayed;
         
         /// <summary>
         /// A list of keyframes that are currently in editor.  Currently used for the keyframe controls, knowing whether to hide them or how to cycle through them.
@@ -44,6 +44,8 @@ namespace XLPrecisionKeyframes.UserInterface
             EditTimeUI = new UserInterfacePopup<EditTimeUI>();
             EditFovUI = new UserInterfacePopup<EditFieldOfViewUI>();
 
+            displayed = new KeyframeInfo();
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -56,6 +58,8 @@ namespace XLPrecisionKeyframes.UserInterface
             EditRotationUI.Destroy();
             EditTimeUI.Destroy();
             EditFovUI.Destroy();
+
+            displayed = null;
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -385,10 +389,10 @@ namespace XLPrecisionKeyframes.UserInterface
         {
             if (cameraTransform == null) return;
 
-            displayed.position.Update(cameraTransform.position);
-            displayed.rotation.Update(cameraTransform.rotation);
-            displayed.time.Update(time ?? 0);
-            displayed.fov.Update(fov ?? 0);
+            displayed?.position?.Update(cameraTransform.position);
+            displayed?.rotation?.Update(cameraTransform.rotation);
+            displayed?.time?.Update(time ?? 0);
+            displayed?.fov?.Update(fov ?? 0);
         }
     }
 }

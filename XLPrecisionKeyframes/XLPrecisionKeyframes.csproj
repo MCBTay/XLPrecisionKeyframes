@@ -37,6 +37,13 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>References\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="BFSUtilities, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\BFSUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>References\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -101,10 +108,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)"=="Debug" ( 
-del /Q /F "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\"
-copy /Y "$(TargetDir)XLPrecisionKeyframes.dll" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.dll"
-copy /Y "$(TargetDir)XLPrecisionKeyframes.pdb" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.pdb"
-copy /Y "$(TargetDir)Info.json" "C:\Users\mcbtay\Downloads\depotdownloader-2.4.5\depots\962731\8147080\Mods\XLPrecisionKeyframes\Info.json"
+del /Q /F "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.dll" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.dll"
+copy /Y "$(TargetDir)XLPrecisionKeyframes.pdb" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\XLPrecisionKeyframes.pdb"
+copy /Y "$(TargetDir)Info.json" "G:\Steam\steamapps\common\Skater XL\Mods\XLPrecisionKeyframes\Info.json"
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -100,5 +100,5 @@ jobs:
     - name: Upload XLPrecisionKeyframes installable zip
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: XLMenuMod
+        name: XLPrecisionKeyframes
         path: ${{env.GITHUB_WORKSPACE}}XLPrecisionKeyframes/bin/Release/*.zip 
